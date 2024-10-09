@@ -70,8 +70,10 @@ Load `dist` directory
 
 ## Run en debug
 
-Start vsCode launch file via 'Run and Debug' tab (Ctrl+Shift+D)
+Start context_page.html in Chrome with extension installed through launch-file through: 
+
+'Run and Debug' tab (Ctrl+Shift+D)
 
 or
 
-vsCode menu => Run => Start Debugging (F5)
+vsCode menu => Run => 'Start Debugging' (F5)
