@@ -32,48 +32,47 @@ Chrome Extension, TypeScript and Visual Studio Code
 
 ## Setup
 
+### Install dependencies
+
 ```
 npm install
 ```
 
-## Import as Visual Studio Code project
-
-...
-
-## Build
+### Build
 
 ```
 npm run build
 ```
 
-## Build in watch mode
-
-### terminal
+### Build in watch mode
 
 ```
 npm run watch
 ```
 
-### Visual Studio Code
+or
 
-Run watch mode.
+type <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> (vsCode)
 
-type `Ctrl + Shift + B`
-
-## Load extension to chrome
+### Load extension to chrome
 
 Load `dist` directory
+<br>
+<br>
 
-## Test
+### Test
 
 `npx jest` or `npm run test`
+<br>
+<br>
 
-## Run en debug
+### Run en debug (vsCode)
 
-Start context_page.html in Chrome with extension installed through launch-file through: 
+Start context_page.html in Chrome with extension installed through launch-file: 
 
-'Run and Debug' tab (`Ctrl+Shift+D`)
+'Run and Debug' tab (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd>) -> play 
 
 or
 
-vsCode menu => Run => 'Start Debugging' (`F5`)
+vsCode menu => Run => 'Start Debugging' (<kbd>F5</kbd>)
+
