@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function checkCodeIsCpp(snippet: any) {
   let result: boolean = false;
-  return  snippet.language === 'language-cpp';
+  return  snippet.language === 'lang-cpp';
 }
 
 function checkCodeIsCppAI(snippet: any) {

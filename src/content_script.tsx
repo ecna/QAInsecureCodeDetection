@@ -1,32 +1,35 @@
 
 function getCodeSnippets() {
 
-    const codeElements = document.querySelectorAll('pre code');
-    const codeSnippets: { code: string; language: string; }[] = [];
-  
-    codeElements.forEach(element => {
-  
-      const code = element.textContent ? element.textContent : "";
-      const language = element.classList[1];
-  
-      codeSnippets.push({ code, language });
-    });
+  const codeSnippets: { code: string; language: string; }[] = [];
+  const preElements = document.querySelectorAll('pre');
 
-    return codeSnippets;
+  for(var i = 0; i < preElements.length; i++){
+
+    const codeElements = preElements[i].childNodes[0];
+    const code = codeElements.textContent ? codeElements.textContent : "";
+    const language = preElements[i] ? preElements[i].classList[0] : "";
+
+    if(code && code.length != 0)codeSnippets.push({ code, language });
+  }
+
+  return codeSnippets;
 }
 
-chrome.runtime.sendMessage({ action: "checkCode", code: getCodeSnippets() }, (response) => {
-  // Got an asynchronous response with the data from the background script
-  if (response.action === "codeChecked") {
-    const codeBlocks = document.querySelectorAll('pre code');
-    for (let i = 0; i < codeBlocks.length; i++) {
-      const result = response.results[i]; 
+setTimeout(() => {
+  chrome.runtime.sendMessage({ action: "checkCode", code: getCodeSnippets() }, (response) => {
+    // Got an asynchronous response with the data from the background script
+    if (response.action === "codeChecked") {
+      const codeBlocks = document.querySelectorAll('pre code');
+      for (let i = 0; i < codeBlocks.length; i++) {
+        const result = response.results[i];
 
-      const codeElement = codeBlocks[i] as HTMLElement;
-      addCheckMark(codeElement, result);
+        const codeElement = codeBlocks[i] as HTMLElement;
+        addCheckMark(codeElement, result);
+      }
     }
-  }
-});
+  });
+}, 0);
 
 function addCheckMark(codeElement: HTMLElement, isCpp: boolean) {
   const checkMark = document.createElement('div');
@@ -37,7 +40,7 @@ function addCheckMark(codeElement: HTMLElement, isCpp: boolean) {
   checkMark.style.float = "right";
   checkMark.style.color = isCpp ? 'green' : 'red';
   checkMark.textContent = isCpp ? '✓' : '✗';
-  if(codeElement.parentNode) codeElement.parentNode.insertBefore(checkMark, codeElement);
+  if (codeElement.parentNode) codeElement.parentNode.insertBefore(checkMark, codeElement);
 }
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
