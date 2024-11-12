@@ -4,14 +4,16 @@ function getCodeSnippets() {
   const codeSnippets: { code: string; language: string; }[] = [];
   const preElements = document.querySelectorAll('pre');
 
-  for(var i = 0; i < preElements.length; i++){
-
-    const codeElements = preElements[i].childNodes[0];
+  preElements.forEach(element => {
+  
+    const codeElements = element.childNodes[0];
+    if(codeElements){
     const code = codeElements.textContent ? codeElements.textContent : "";
-    const language = preElements[i] ? preElements[i].classList[0] : "";
+    const language = element.classList[0] ? element.classList[0] : "";
 
     if(code && code.length != 0)codeSnippets.push({ code, language });
-  }
+    }
+  });
 
   return codeSnippets;
 }
@@ -21,6 +23,7 @@ setTimeout(() => {
     // Got an asynchronous response with the data from the background script
     if (response.action === "codeChecked") {
       const codeBlocks = document.querySelectorAll('pre code');
+      
       for (let i = 0; i < codeBlocks.length; i++) {
         const result = response.results[i];
 
