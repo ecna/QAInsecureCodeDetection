@@ -5,9 +5,9 @@
         "type": "chrome",
         "request": "launch",
         "name": "Launch Chrome against Extension",
-        // "url": "http://localhost:3000",  // Only if you're testing a web app related to the extension
+         "url": "https://stackoverflow.com/questions/50757447/cast-c-like-pointer-to-c-matrix",  // Only if you're testing a web app related to the extension
         "webRoot": "${workspaceFolder}",
-        "file": "${workspaceFolder}/context_page.html",
+        //"file": "${workspaceFolder}/context_page.html",
         "runtimeArgs": [
           "--load-extension=${workspaceFolder}/dist",
           "--remote-debugging-port=9222"
