@@ -16,7 +16,7 @@
 
   "content_scripts": [
       {
-          "matches": ["*://*.stackoverflow.com/*"],
+          "matches": ["*://*.stackoverflow.com/*", "file:///*/QAInsecureCodeDetection/context_page.html"],
           "js": ["js/vendor.js", "js/content_script.js"]
       }
   ],
