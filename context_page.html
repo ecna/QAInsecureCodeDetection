@@ -1,12 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extension demo page</title>
 </head>
+
 <body>
     <h1>Extension Demo Page</h1>
-    
+    <div class="inner-content clearfix">
+
+
+        <div id="question-header" class="d-flex sm:fd-column">
+            <h1 itemprop="name" class="fs-headline1 ow-break-word mb8 flex--item fl1"><a
+                    href="/questions/50757447/cast-c-like-pointer-to-c-matrix" class="question-hyperlink">Cast (C like)
+                    pointer to C++ matrix</a></h1>
+
+            <div class="ml12 aside-cta flex--item sm:ml0 sm:mb12 sm:order-first d-flex jc-end">
+
+                <div class="ml12 aside-cta flex--item print:d-none">
+                    <a href="/questions/ask" class="ws-nowrap s-btn s-btn__filled">
+                        Ask Question
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex fw-wrap pb8 mb16 bb bc-black-200">
+            <div class="flex--item ws-nowrap mr16 mb8" title="2018-06-08 09:25:35Z">
+                <span class="fc-black-400 mr2">Asked</span>
+                <time itemprop="dateCreated" datetime="2018-06-08T09:25:35">6 years, 5 months ago</time>
+            </div>
+            <div class="flex--item ws-nowrap mr16 mb8">
+                <span class="fc-black-400 mr2">Modified</span>
+                <a href="?lastactivity" class="s-link s-link__inherit" title="2018-06-08 13:47:45Z">6 years, 5 months
+                    ago</a>
+            </div>
+            <div class="flex--item ws-nowrap mb8" title="Viewed 451 times">
+                <span class="fc-black-400 mr2">Viewed</span>
+                451 times
+            </div>
+        </div>
+
+
+
+        <div id="mainbar" role="main" aria-label="question and answers">
+
+            <div class="question js-question" data-questionid="50757447" data-position-on-page="0" data-score="2"
+                id="question">
+                <style>
+                </style>
+                <div class="js-zone-container zone-container-main">
+                    <div id="dfp-tlb"
+                        class="everyonelovesstackoverflow everyoneloves__top-leaderboard everyoneloves__leaderboard"
+                        style="min-height: auto; height: auto; display: none;"></div>
+                    <div class="js-report-ad-button-container " style="width: 728px"></div>
+                </div>
+
+
+                <div class="post-layout ">
+
+                    <div class="postcell post-layout--right">
+
+                        <div class="s-prose js-post-body" itemprop="text">
+
+                            <p>I would like to pass matrix around from one function to another so I did:</p>
+
+                            <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2</span>;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span><span class="hljs-params">(<span class="hljs-type">int</span> (*matrix)[N])</span> 
+</span>{
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; ++j)
+        matrix[i][j] = <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> 
+</span>{
+<span class="hljs-type">int</span> *x = (<span class="hljs-type">int</span>*)<span class="hljs-built_in">malloc</span>(N*N*<span class="hljs-built_in">sizeof</span>(<span class="hljs-type">int</span>));
+<span class="hljs-built_in">init_matrix</span>( (<span class="hljs-built_in">int</span> (*)[N]) x );
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                            <p>How do I make the call to <code>init_matrix()</code> easier? I'm imagining it like
+                                <code>init_matrix(x, N)</code>.
+                            </p>
+
+                            <p>Please note that, I'm kind of avoiding <code>std::vector</code> because I will play with
+                                parallel programming (pthreads, OpenMP, MPI) soon after.
+                                So I will ask for a solution without <code>std</code> approaches for building matrix.
+                            </p>
+                        </div>
+
+                        <div class="mt24 mb12">
+                            <div class="post-taglist d-flex gs4 gsy fd-column">
+                                <div class="d-flex ps-relative fw-wrap">
+
+                                    <ul class="ml0 list-ls-none js-post-tag-list-wrapper d-inline">
+                                        <li class="d-inline mr4 js-post-tag-list-item"><a
+                                                href="/questions/tagged/c%2b%2b" class="s-tag post-tag js-gps-track"
+                                                title="show questions tagged 'c++'"
+                                                aria-label="show questions tagged 'c++'" rel="tag"
+                                                aria-labelledby="tag-c++-tooltip-container"
+                                                data-tag-menu-origin="Unknown">c++</a></li>
+                                        <li class="d-inline mr4 js-post-tag-list-item"><a
+                                                href="/questions/tagged/matrix" class="s-tag post-tag js-gps-track"
+                                                title="show questions tagged 'matrix'"
+                                                aria-label="show questions tagged 'matrix'" rel="tag"
+                                                aria-labelledby="tag-matrix-tooltip-container"
+                                                data-tag-menu-origin="Unknown">matrix</a></li>
+                                        <li class="d-inline mr4 js-post-tag-list-item"><a
+                                                href="/questions/tagged/multidimensional-array"
+                                                class="s-tag post-tag js-gps-track"
+                                                title="show questions tagged 'multidimensional-array'"
+                                                aria-label="show questions tagged 'multidimensional-array'" rel="tag"
+                                                aria-labelledby="tag-multidimensional-array-tooltip-container"
+                                                data-tag-menu-origin="Unknown">multidimensional-array</a></li>
+                                        <li class="d-inline mr4 js-post-tag-list-item"><a
+                                                href="/questions/tagged/c%2b%2b14" class="s-tag post-tag js-gps-track"
+                                                title="show questions tagged 'c++14'"
+                                                aria-label="show questions tagged 'c++14'" rel="tag"
+                                                aria-labelledby="tag-c++14-tooltip-container"
+                                                data-tag-menu-origin="Unknown">c++14</a></li>
+                                        <li class="d-inline mr4 js-post-tag-list-item"><a
+                                                href="/questions/tagged/raw-pointer" class="s-tag post-tag js-gps-track"
+                                                title="show questions tagged 'raw-pointer'"
+                                                aria-label="show questions tagged 'raw-pointer'" rel="tag"
+                                                aria-labelledby="tag-raw-pointer-tooltip-container"
+                                                data-tag-menu-origin="Unknown">raw-pointer</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="js-zone-container zone-container-responsive">
+                <div id="dfp-isb" class="everyonelovesstackoverflow everyoneloves__inline-sidebar mx-auto"
+                    style="min-height: auto; height: auto; display: none;"></div>
+                <div class="js-report-ad-button-container mx-auto" style="width: 300px"></div>
+            </div>
+
+
+
+            <div id="answers">
+                <a name="tab-top"></a>
+                <div id="answers-header">
+                    <div class="answers-subheader d-flex ai-center mb8">
+                        <div class="flex--item fl1">
+                            <h2 class="mb0" data-answercount="5">
+                                5 Answers
+                                <span style="display:none;" itemprop="answerCount">5</span>
+                            </h2>
+                        </div>
+                        <div class="flex--item">
+
+
+                            <div class="d-flex g4 gsx ai-center sm:fd-column sm:ai-start">
+                                <div class="d-flex fd-column ai-end sm:ai-start">
+                                    <label class="flex--item fs-caption" for="answer-sort-dropdown-select-menu">
+                                        Sorted by:
+                                    </label>
+                                    <a class="js-sort-preference-change s-link flex--item fs-fine d-none"
+                                        data-value="ScoreDesc"
+                                        href="/questions/50757447/cast-c-like-pointer-to-c-matrix?answertab=scoredesc#tab-top">
+                                        Reset to default
+                                    </a>
+                                </div>
+                                <div class="flex--item s-select">
+                                    <select id="answer-sort-dropdown-select-menu">
+                                        <option value="scoredesc" selected="selected">
+                                            Highest score (default)
+                                        </option>
+                                        <option value="trending">
+                                            Trending (recent votes count more)
+                                        </option>
+                                        <option value="modifieddesc">
+                                            Date modified (newest first)
+                                        </option>
+                                        <option value="createdasc">
+                                            Date created (oldest first)
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <a name="50758030"></a>
+                <div id="answer-50758030" class="answer js-answer" data-answerid="50758030" data-parentid="50757447"
+                    data-score="3" data-position-on-page="1" data-highest-scored="1"
+                    data-question-has-accepted-highest-score="0" itemprop="suggestedAnswer" itemscope=""
+                    itemtype="https://schema.org/Answer">
+                    <div class="post-layout">
+
+                        <div class="answercell post-layout--right">
+
+                            <div class="s-prose js-post-body" itemprop="text">
+                                <p>Just don't.</p>
+
+                                <p>Multi-dimensional array is not the place where C++ is at its best. Here it is still
+                                    acceptable because N is a compile time constant, but if it was a run-time variable
+                                    you would be off because VLA are not supported in standard C++ (even if they are
+                                    supported <em>as an implementation extension</em> by some implementations like gcc
+                                    and clang).</p>
+
+                                <p>So if you really need to deal with true 2D arrays, just use a custom class containing
+                                    an underlying <code>std::array</code> for fixed compile time dimension or a vector
+                                    for runtime dimensions for the total size and provide 2d accessors to that. As
+                                    <code>std::arrays</code> and vectors are objects, you avoid the ressource copying
+                                    and moving nightmare(*).
+                                </p>
+
+                                <p>A simplified implementation could be:</p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">matrix</span> {
+std::vector&lt;<span class="hljs-type">int</span>&gt; vec;
+<span class="hljs-type">int</span>  rows;
+<span class="hljs-type">int</span> cols;
+
+<span class="hljs-keyword">public</span>:
+<span class="hljs-built_in">matrix</span>(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j): <span class="hljs-built_in">rows</span>(i), <span class="hljs-built_in">cols</span>(j), <span class="hljs-built_in">vec</span>(i * j) {}
+
+<span class="hljs-function"><span class="hljs-type">int</span>&amp; <span class="hljs-title">at</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span> </span>{
+   <span class="hljs-keyword">return</span> vec[j + i * cols];
+}
+
+<span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; <span class="hljs-title">at</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span> <span class="hljs-type">const</span> </span>{
+   <span class="hljs-keyword">return</span> vec[j + i * cols];
+}
+};
+</code></pre>
+
+                                <p>That way the underlying structure is still a true 2D array, and you do have methods
+                                    to use it whith its 2 dimensions</p>
+
+                                <p>What are still lacking here:</p>
+
+                                <ul>
+                                    <li>indices and sizes should probably be <code>size_t</code> instead of
+                                        <code>int</code>
+                                    </li>
+                                    <li>indices could be tested to be in an acceptable range in <code>at</code> methods
+                                        - if you don't check them, the function should not be called <code>at</code>...
+                                    </li>
+                                    <li>other constructors to build a matrix on top of an existing 2D array (that could
+                                        come from C legacy code for example)</li>
+                                </ul>
+
+                                <p>Additional remark:</p>
+
+                                <p>You say that you want to avoid vectors for possible multi-threading. First I cannot
+                                    imagine why a vector would be less multi-thread safe that a manually allocated
+                                    dynamic array. Second if you really need manual allocation you will have to follow
+                                    the rule of three/five and implement custom copy/move constructors and assignment
+                                    operator in addition to a custom destructor.</p>
+
+                                <hr>
+
+                                <p>(*) I have the project to write a generic multi-D container supporting
+                                    <code>operator []</code> and iterators, so I know that it is a rather complex task.
+                                    I have already submitted a pre-version to <a
+                                        href="https://codereview.stackexchange.com/q/173979/146901">code review</a> but
+                                    it is still far from being simply useable.
+                                </p>
+                            </div>
+                            <div class="mt24">
+                                <div class="d-flex fw-wrap ai-start jc-end gs8 gsy">
+                                    <time itemprop="dateCreated" datetime="2018-06-08T09:56:41"></time>
+                                    <div class="flex--item mr16" style="flex: 1 1 100px;">
+
+                                    </div>
+                                    <div class="post-signature flex--item fl0">
+                                        <div class="user-info ">
+                                            <div class="d-flex ">
+                                                <div class="user-action-time fl-grow1">
+                                                    <a href="/posts/50758030/revisions"
+                                                        title="show all edits to this post" class="js-gps-track"
+                                                        data-gps-track="post.click({ item: 4, priv: 0, post_type: 2 })">edited
+                                                        <span title="2018-06-08 10:16:27Z" class="relativetime">Jun 8,
+                                                            2018 at 10:16</span></a>
+                                                </div>
+
+                                            </div>
+                                            <div class="user-gravatar32">
+
+                                            </div>
+                                            <div class="user-details">
+
+                                                <div class="-flair">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="post-signature flex--item fl0">
+                                        <div class="user-info user-hover ">
+                                            <div class="d-flex ">
+                                                <div class="user-action-time fl-grow1">
+                                                    answered <span title="2018-06-08 09:56:41Z" class="relativetime">Jun
+                                                        8, 2018 at 9:56</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="user-gravatar32">
+                                                <a href="/users/3545273/serge-ballesta">
+                                                    <div class="gravatar-wrapper-32"><img
+                                                            src="https://i.sstatic.net/RDWxl.png?s=64"
+                                                            alt="Serge Ballesta's user avatar" width="32" height="32"
+                                                            class="bar-sm"></div>
+                                                </a>
+                                            </div>
+                                            <div class="user-details" itemprop="author" itemscope=""
+                                                itemtype="http://schema.org/Person">
+                                                <a href="/users/3545273/serge-ballesta">Serge Ballesta</a><span
+                                                    class="d-none" itemprop="name">Serge Ballesta</span>
+                                                <div class="-flair">
+                                                    <span class="reputation-score" title="reputation score 148,320"
+                                                        dir="ltr">148k</span><span title="13 gold badges"
+                                                        aria-hidden="true"><span class="badge1"></span><span
+                                                            class="badgecount">13</span></span><span
+                                                        class="v-visible-sr">13 gold badges</span><span
+                                                        title="131 silver badges" aria-hidden="true"><span
+                                                            class="badge2"></span><span
+                                                            class="badgecount">131</span></span><span
+                                                        class="v-visible-sr">131 silver badges</span><span
+                                                        title="258 bronze badges" aria-hidden="true"><span
+                                                            class="badge3"></span><span
+                                                            class="badgecount">258</span></span><span
+                                                        class="v-visible-sr">258 bronze badges</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="js-zone-container zone-container-main">
+                    <div id="dfp-mlb"
+                        class="everyonelovesstackoverflow everyoneloves__mid-leaderboard everyoneloves__leaderboard"
+                        style="min-height: auto; height: auto; display: none;"></div>
+                    <div class="js-report-ad-button-container " style="width: 728px"></div>
+                </div>
+
+                <a name="50758082"></a>
+                <div id="answer-50758082" class="answer js-answer" data-answerid="50758082" data-parentid="50757447"
+                    data-score="3" data-position-on-page="2" data-highest-scored="1"
+                    data-question-has-accepted-highest-score="0" itemprop="suggestedAnswer" itemscope=""
+                    itemtype="https://schema.org/Answer">
+                    <div class="post-layout">
+
+                        <div class="answercell post-layout--right">
+
+                            <div class="s-prose js-post-body" itemprop="text">
+                                <p>You can use an alias to make the call looks better:</p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2</span>;
+
+<span class="hljs-keyword">using</span> TypeMatrix =<span class="hljs-built_in">int</span> (*)[N]; <span class="hljs-comment">//alias</span>
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span><span class="hljs-params">(TypeMatrix matrix)</span> </span>{ <span class="hljs-comment">//simply use the alias</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; ++j)
+        matrix[i][j] = <span class="hljs-number">1</span>;
+}
+
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+TypeMatrix x = (TypeMatrix)(<span class="hljs-type">int</span>*)<span class="hljs-built_in">malloc</span>(N*N*<span class="hljs-built_in">sizeof</span>(<span class="hljs-type">int</span>)); <span class="hljs-comment">//avoid malloc</span>
+<span class="hljs-built_in">init_matrix</span>(x);
+}
+</code></pre>
+
+                                <p>Note also that you can take this to the next level by using template alias like as
+                                    follows:</p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2</span>;
+
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T , <span class="hljs-type">int</span> K&gt;
+<span class="hljs-keyword">using</span> TypeMatrix =<span class="hljs-built_in">T</span> (*)[K];
+
+<span class="hljs-keyword">using</span> MatrixInt =TypeMatrix&lt;<span class="hljs-type">int</span>,N&gt;;
+<span class="hljs-keyword">using</span> MatrixDouble =TypeMatrix&lt;<span class="hljs-type">double</span>,N&gt;;
+
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Matrix&gt;
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span><span class="hljs-params">(Matrix matrix)</span> </span>{
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; ++j)
+        matrix[i][j] = <span class="hljs-number">1.1</span>;
+}
+
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Matrix&gt;
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">(Matrix matrix)</span> </span>{
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; ++j)
+        std::cout&lt;&lt;matrix[i][j]&lt;&lt; <span class="hljs-string">" "</span>;
+}
+
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+MatrixInt x = (MatrixInt) (<span class="hljs-keyword">new</span> <span class="hljs-type">int</span>[N*N]);
+MatrixDouble y = (MatrixDouble) (<span class="hljs-keyword">new</span> <span class="hljs-type">double</span>[N*N]);
+<span class="hljs-built_in">init_matrix</span>(x);
+<span class="hljs-built_in">init_matrix</span>(y);
+<span class="hljs-built_in">print</span>(x);
+<span class="hljs-built_in">print</span>(y);
+}
+</code></pre>
+
+                                <p>That said I highly discourage using raw pointers and mixing C and C++
+                                    (<code>malloc</code> vs <code>new</code>) for this kind of job. Use
+                                    <code>std::array</code> or <code>std::vector</code> instead.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <a name="50758014"></a>
+                <div id="answer-50758014" class="answer js-answer" data-answerid="50758014" data-parentid="50757447"
+                    data-score="0" data-position-on-page="3" data-highest-scored="0"
+                    data-question-has-accepted-highest-score="0" itemprop="suggestedAnswer" itemscope=""
+                    itemtype="https://schema.org/Answer">
+                    <div class="post-layout">
+
+                        <div class="answercell post-layout--right">
+
+                            <div class="s-prose js-post-body" itemprop="text">
+                                <p>Disregarding bad practice of using <code>malloc</code> in C++, then...</p>
+
+                                <p>You can replace the array pointer in the function parameter with an array. This will
+                                    decay right back to an array pointer, but it makes the function interface a bit
+                                    clearer.</p>
+
+                                <p>You can't convert between <code>int(*)[N]</code> and <code>(int*)</code> in neither C
+                                    nor C++. They are not compatible pointer types. Even if they point at the very same
+                                    address, you will get undefined behavior problems caused by strict pointer aliasing.
+                                </p>
+
+                                <p>You <em>could</em> rewrite the code like this, but it's not really recommended
+                                    either:</p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2</span>;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span><span class="hljs-params">(<span class="hljs-type">int</span> matrix[N][N])</span> </span>{
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i)
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; ++j)
+        matrix[i][j] = <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+<span class="hljs-built_in">int</span> (*x)[N] = (<span class="hljs-built_in">int</span>(*)[N])<span class="hljs-built_in">malloc</span>(N*N*<span class="hljs-built_in">sizeof</span>(<span class="hljs-type">int</span>));
+<span class="hljs-built_in">init_matrix</span>(*x);
+}
+</code></pre>
+
+                                <p>I wouldn't recommend it in C++ - this style is quite cumbersome without the VLA
+                                    feature of C. In C++ it is probably wiser to use <code>std::array&amp;</code>
+                                    instead.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="js-zone-container zone-container-main">
+                    <div id="dfp-smlb"
+                        class="everyonelovesstackoverflow everyoneloves__mid-second-leaderboard everyoneloves__leaderboard"
+                        style="min-height: auto; height: auto; display: none;"></div>
+                    <div class="js-report-ad-button-container " style="width: 728px"></div>
+                </div>
+
+                <a name="50757967"></a>
+                <div id="answer-50757967" class="answer js-answer" data-answerid="50757967" data-parentid="50757447"
+                    data-score="0" data-position-on-page="4" data-highest-scored="0"
+                    data-question-has-accepted-highest-score="0" itemprop="suggestedAnswer" itemscope=""
+                    itemtype="https://schema.org/Answer">
+                    <div class="post-layout">
+
+                        <div class="answercell post-layout--right">
+
+                            <div class="s-prose js-post-body" itemprop="text">
+                                <p>If you need dynamic allocation of contiguous integers for some reason, you can use a
+                                    vector of arrays, or a smart pointer.</p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-function">std::vector&lt;<span class="hljs-type">int</span>[N]&gt; <span class="hljs-title">x</span><span class="hljs-params">(N)</span></span>;
+std::unique_ptr&lt;<span class="hljs-type">int</span>[][N]&gt; x = std::<span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>[][N]&gt;(N);
+</code></pre>
+
+                                <p>Using your implementation of <code>init_matrix</code>, you can simply pass in the
+                                    address of the first element.</p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-built_in">init_matrix</span>(&amp;x[<span class="hljs-number">0</span>]);
+</code></pre>
+
+                                <p>However, it would be preferable to pass the vector or smart pointer in by reference.
+                                </p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span> <span class="hljs-params">(std::vector&lt;<span class="hljs-type">int</span>[N]&gt; &amp;matrix)</span> </span>{
+...
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span> <span class="hljs-params">(std::unique_ptr&lt;<span class="hljs-type">int</span>[][N]&gt; &amp;matrix)</span> </span>{
+...
+}
+
+...
+<span class="hljs-built_in">init_matrix</span>(x);
+</code></pre>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <a name="50760838"></a>
+                <div id="answer-50760838" class="answer js-answer" data-answerid="50760838" data-parentid="50757447"
+                    data-score="0" data-position-on-page="5" data-highest-scored="0"
+                    data-question-has-accepted-highest-score="0" itemprop="suggestedAnswer" itemscope=""
+                    itemtype="https://schema.org/Answer">
+                    <div class="post-layout">
+
+                        <div class="answercell post-layout--right">
+
+                            <div class="s-prose js-post-body" itemprop="text">
+                                <p>There's nothing wrong with using <code>std::vector</code> for multi-threaded
+                                    programming, for instance explained <a
+                                        href="https://stackoverflow.com/a/9307403/6717178">here</a>. Any other storage
+                                    is just as dangerous.</p>
+
+                                <p>Apart from all the vector examples shown in the other answers: If you are using
+                                    fixed-size matrices, you could even consider going to templates based on
+                                    <code>std::array</code>.
+                                </p>
+
+                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span>
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>, <span class="hljs-type">size_t</span> rows, <span class="hljs-type">size_t</span> cols&gt;
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Matrix</span> {
+<span class="hljs-keyword">public</span>:
+<span class="hljs-built_in">Matrix</span>() {}
+<span class="hljs-built_in">Matrix</span>(T init) { data.<span class="hljs-built_in">fill</span>(init); }
+<span class="hljs-function"><span class="hljs-type">double</span>&amp; <span class="hljs-title">operator</span><span class="hljs-params">()</span> <span class="hljs-params">(<span class="hljs-type">size_t</span> row, <span class="hljs-type">size_t</span> col)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (row &lt; rows &amp;&amp; col &lt; cols) <span class="hljs-keyword">return</span> data[cols*row + col];
+    <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">out_of_range</span>(<span class="hljs-string">"Matrix subscript out of bounds."</span>);
+}
+<span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span> <span class="hljs-params">(<span class="hljs-type">size_t</span> row, <span class="hljs-type">size_t</span> col)</span> <span class="hljs-type">const</span>
+</span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">data</span>(row, col);
+}
+<span class="hljs-keyword">private</span>:
+std::array&lt;T, rows*cols&gt; data;
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+<span class="hljs-function">Matrix&lt;<span class="hljs-type">double</span>, 2, 2&gt; <span class="hljs-title">mat</span><span class="hljs-params">(<span class="hljs-number">1.0</span>)</span></span>;
+<span class="hljs-built_in">mat</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) = <span class="hljs-number">2.3</span>;
+std::cout &lt;&lt; <span class="hljs-string">"mat(1,1) = "</span> &lt;&lt; <span class="hljs-built_in">mat</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) &lt;&lt; std::endl;
+}
+</code></pre>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
