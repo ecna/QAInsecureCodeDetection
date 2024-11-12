@@ -67,7 +67,7 @@
 
                             <p>I would like to pass matrix around from one function to another so I did:</p>
 
-                            <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+                            <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
 <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2</span>;
@@ -230,7 +230,7 @@
 
                                 <p>A simplified implementation could be:</p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">matrix</span> {
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">matrix</span> {
 std::vector&lt;<span class="hljs-type">int</span>&gt; vec;
 <span class="hljs-type">int</span>  rows;
 <span class="hljs-type">int</span> cols;
@@ -381,7 +381,7 @@ std::vector&lt;<span class="hljs-type">int</span>&gt; vec;
                             <div class="s-prose js-post-body" itemprop="text">
                                 <p>You can use an alias to make the call looks better:</p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
@@ -405,7 +405,7 @@ TypeMatrix x = (TypeMatrix)(<span class="hljs-type">int</span>*)<span class="hlj
                                 <p>Note also that you can take this to the next level by using template alias like as
                                     follows:</p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
@@ -479,7 +479,7 @@ MatrixDouble y = (MatrixDouble) (<span class="hljs-keyword">new</span> <span cla
                                 <p>You <em>could</em> rewrite the code like this, but it's not really recommended
                                     either:</p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
 <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2</span>;
@@ -525,20 +525,20 @@ MatrixDouble y = (MatrixDouble) (<span class="hljs-keyword">new</span> <span cla
                                 <p>If you need dynamic allocation of contiguous integers for some reason, you can use a
                                     vector of arrays, or a smart pointer.</p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-function">std::vector&lt;<span class="hljs-type">int</span>[N]&gt; <span class="hljs-title">x</span><span class="hljs-params">(N)</span></span>;
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-function">std::vector&lt;<span class="hljs-type">int</span>[N]&gt; <span class="hljs-title">x</span><span class="hljs-params">(N)</span></span>;
 std::unique_ptr&lt;<span class="hljs-type">int</span>[][N]&gt; x = std::<span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>[][N]&gt;(N);
 </code></pre>
 
                                 <p>Using your implementation of <code>init_matrix</code>, you can simply pass in the
                                     address of the first element.</p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-built_in">init_matrix</span>(&amp;x[<span class="hljs-number">0</span>]);
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-built_in">init_matrix</span>(&amp;x[<span class="hljs-number">0</span>]);
 </code></pre>
 
                                 <p>However, it would be preferable to pass the vector or smart pointer in by reference.
                                 </p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span> <span class="hljs-params">(std::vector&lt;<span class="hljs-type">int</span>[N]&gt; &amp;matrix)</span> </span>{
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_matrix</span> <span class="hljs-params">(std::vector&lt;<span class="hljs-type">int</span>[N]&gt; &amp;matrix)</span> </span>{
 ...
 }
 
@@ -577,7 +577,7 @@ std::unique_ptr&lt;<span class="hljs-type">int</span>[][N]&gt; x = std::<span cl
                                     <code>std::array</code>.
                                 </p>
 
-                                <pre class="lang-cpp s-code-block"><div style="top: 5px; right: 5px; font-size: 20px; font-weight: bold; float: right; color: green;">✓</div><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+                                <pre class="lang-cpp s-code-block"><code data-highlighted="yes" class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span>
 
 <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>, <span class="hljs-type">size_t</span> rows, <span class="hljs-type">size_t</span> cols&gt;

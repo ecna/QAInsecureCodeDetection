@@ -1,4 +1,4 @@
-import { checkCodeIsCpp } from "./codeChecks";
+import { checkCodeIsCpp } from "./backCodeChecks";
 
 // function polling() {
 //   // console.log("polling");

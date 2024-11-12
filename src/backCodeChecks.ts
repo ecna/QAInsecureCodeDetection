@@ -7,7 +7,6 @@ export function checkCodeIsCpp(snippet: any) {
 export function checkCodeIsCppAI(snippet: any) {
     let result: boolean = false;
     // Call Gemini API here
-    // Replace with your actual API call and processing logic
     fetch('https://api.gemini.com/v1/code/analyze', {
         method: 'POST',
         headers: {
@@ -18,7 +17,6 @@ export function checkCodeIsCppAI(snippet: any) {
     })
         .then(response => response.json())
         .then(data => {
-            // Assuming the API returns a language property
             result = data.language === "C++";
         })
         .catch(error => {

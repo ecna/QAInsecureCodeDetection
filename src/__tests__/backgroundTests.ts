@@ -2,7 +2,7 @@ import path from 'path';
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
 
-import { checkCodeIsCpp } from "../codeChecks";
+import { checkCodeIsCpp } from "../backCodeChecks";
 
 describe("checkCodeIsCpp", () => {
 
