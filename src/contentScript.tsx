@@ -1,16 +1,32 @@
-import { getCodeSnippets } from "./contextPageContol";
+import { getCodeSnippets } from "./contentPageContol";
 
 setTimeout(() => {
-  chrome.runtime.sendMessage({ action: "checkCode", code: getCodeSnippets() }, (response) => {
+  chrome.runtime.sendMessage({ action: "checkCodeCPP", code: getCodeSnippets() }, (response) => {
     // Got an asynchronous response with the data from the background script
-    if (response.action === "codeChecked") {
+    if (response.action === "codeCheckedCPP") {
       const codeBlocks = document.querySelectorAll('pre code');
-      
+
       for (let i = 0; i < codeBlocks.length; i++) {
         const result = response.results[i];
 
         const codeElement = codeBlocks[i] as HTMLElement;
         addCheckMark(codeElement, result);
+      }
+    }
+  });
+}, 0);
+
+
+setTimeout(() => {
+  chrome.runtime.sendMessage({ action: "checkCodeSecure", code: getCodeSnippets() }, (response) => {
+    // Got an asynchronous response with the data from the background script
+    if (response.action === "codeCheckedSecure") {
+      const codeBlocks = document.querySelectorAll('pre code');
+
+      for (let i = 0; i < codeBlocks.length; i++) {
+        const result = response.results[i];
+
+        console.log("Result: ", result);
       }
     }
   });

@@ -1,3 +1,4 @@
+import chatGPTPrompt from "./APIconnectorGPT";
 
 export function checkCodeIsCpp(snippet: any) {
     let result: boolean = false;
@@ -22,6 +23,30 @@ export function checkCodeIsCppAI(snippet: any) {
         .catch(error => {
             console.error("Error checking code:", error);
         });
+
+    return result;
+}
+
+let result: string = "";
+
+export function checkCodeIsSecure(snippet: any) {
+
+    
+    (async () => {
+        const userPrompt = `Analyze the following code for security issues:\n\n${snippet}`;
+        try {
+            const response = await chatGPTPrompt(userPrompt);
+            result = response;
+            console.log("ChatGPT Response:", response);
+            return result ?? "No response from the API.";
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error("An unknown error occurred");
+            }
+        }
+    })();
 
     return result;
 }

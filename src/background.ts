@@ -1,4 +1,4 @@
-import { checkCodeIsCpp } from "./backCodeChecks";
+import { checkCodeIsCpp, checkCodeIsSecure } from "./backCodeChecks";
 
 // function polling() {
 //   // console.log("polling");
@@ -8,18 +8,27 @@ import { checkCodeIsCpp } from "./backCodeChecks";
 // polling();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "checkCode") {
+  if (request.action === "checkCodeCPP") {
     const codeSnippets = request.code;
     const results: boolean[] = [];
 
-    // Process each code snippet
     codeSnippets.forEach((snippet: any) => {
 
       results.push(checkCodeIsCpp(snippet));
     });
 
-    // Send results back to content script
-    sendResponse({ action: "codeChecked", results: results });
+    sendResponse({ action: "codeCheckedCPP", results: results });
+  }
+  else if (request.action === "checkCodeSecure") {
+    const codeSnippets = request.code;
+    const results: string[] = [];
+
+    codeSnippets.forEach((snippet: any) => {
+
+      results.push(checkCodeIsSecure(snippet.code));
+    });
+    
+        sendResponse({ action: "codeCheckedSecure", results: results });
   }
 
 });

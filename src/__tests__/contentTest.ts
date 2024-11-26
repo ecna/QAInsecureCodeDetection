@@ -1,4 +1,4 @@
-import { getCodeSnippets } from '../contextPageContol';
+import { getCodeSnippets } from '../contentPageContol';
 import path from 'path';
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
