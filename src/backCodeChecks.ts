@@ -1,3 +1,4 @@
+import chatGeminiPrompt from "./APIconnectorGemini";
 import chatGPTPrompt from "./APIconnectorGPT";
 
 export function checkCodeIsCpp(snippet: any) {
@@ -35,7 +36,8 @@ export function checkCodeIsSecure(snippet: any) {
     (async () => {
         const userPrompt = `Analyze the following code for security issues:\n\n${snippet}`;
         try {
-            const response = await chatGPTPrompt(userPrompt);
+            const response = await chatGeminiPrompt(userPrompt);
+            //const response = await chatGPTPrompt(userPrompt);
             result = response;
             console.log("ChatGPT Response:", response);
             return result ?? "No response from the API.";

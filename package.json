@@ -17,6 +17,7 @@
     "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@types/jsdom": "^21.1.7",
     "axios": "^1.7.7",
     "jsdom": "^25.0.1",
