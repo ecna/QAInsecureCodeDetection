@@ -1,3 +1,4 @@
+import chatClaudePrompt from "./APIconnectorClaude";
 import chatGeminiPrompt from "./APIconnectorGemini";
 import chatGPTPrompt from "./APIconnectorGPT";
 
@@ -36,10 +37,29 @@ export function checkCodeIsSecure(snippet: any) {
     (async () => {
         const userPrompt = `Analyze the following code for security issues:\n\n${snippet}`;
         try {
-            const response = await chatGeminiPrompt(userPrompt);
+            //const response = await chatClaudePrompt(userPrompt);
+            //const response = await chatGeminiPrompt(userPrompt);
             //const response = await chatGPTPrompt(userPrompt);
+            const config = {
+                apiProvider: 'Claude' // Change this to 'GPT' or 'Gemini' to use different APIs
+            };
+
+            let response;
+            switch (config.apiProvider) {
+                case 'Claude':
+                    response = await chatClaudePrompt(userPrompt);
+                    break;
+                case 'GPT':
+                    response = await chatGPTPrompt(userPrompt);
+                    break;
+                case 'Gemini':
+                    response = await chatGeminiPrompt(userPrompt);
+                    break;
+                default:
+                    throw new Error("Invalid API provider specified in configuration.");
+            }
             result = response;
-            console.log("ChatGPT Response:", response);
+            console.log("API response:", response);
             return result ?? "No response from the API.";
         } catch (error) {
             if (error instanceof Error) {
