@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
-export function getSetting(): Promise<any> {
-  return new Promise((resolve, reject) => {
-      chrome.storage.sync.get("usedAPIconnector", (result) => {
-          if (chrome.runtime.lastError) {
-              reject(chrome.runtime.lastError);
-          } else {
-              resolve(result["usedAPIconnector"]);
-          }
-      });
-  });
-}
-
-
-
 const Options = () => {
   const [API, setAPI] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-  const [like, setLike] = useState<boolean>(false);
+  const [testMode, setTestMode] = useState<boolean>(false);
 
   
   useEffect(() => {
@@ -27,11 +13,11 @@ const Options = () => {
     chrome.storage.sync.get(
       {
         usedAPIconnector: "Gemini",
-        likesColor: true,
+        testModeOn: true,
       },
       (items) => {
         setAPI(items.usedAPIconnector);
-        setLike(items.likesColor);
+        setTestMode(items.testModeOn);
       }
     );
   }, []);
@@ -41,7 +27,7 @@ const Options = () => {
     chrome.storage.sync.set(
       {
         usedAPIconnector: API,
-        likesColor: like,
+        testModeOn: testMode,
       },
       () => {
         // Update status to let user know options were saved.
@@ -70,10 +56,10 @@ const Options = () => {
         <label>
           <input
             type="checkbox"
-            checked={like}
-            onChange={(event) => setLike(event.target.checked)}
+            checked={testMode}
+            onChange={(event) => setTestMode(event.target.checked)}
           />
-          I like colors.
+          test mode
         </label>
       </div>
       <div>{status}</div>
