@@ -10,7 +10,10 @@ export function getCodeSnippets() {
       const code = codeElements.textContent ? codeElements.textContent : "";
       const language = element.classList[0] ? element.classList[0] : "";
 
-      if (code && code.length != 0) codeSnippets.push({ code, language });
+      if (code && code.length != 0) 
+        {codeSnippets.push({ code, language });
+      console.log(code)
+    }
     }
   });
 

@@ -1,4 +1,5 @@
-import { checkCodeIsCpp, checkCodeIsSecure } from "./backCodeChecks";
+import { checkCodeIsCpp } from "./backCodeChecks";
+import checkCodeIsSecure from "./backCodeChecks";
 
 // function polling() {
 //   // console.log("polling");
@@ -8,27 +9,35 @@ import { checkCodeIsCpp, checkCodeIsSecure } from "./backCodeChecks";
 // polling();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "checkCodeCPP") {
+  (async () => {
+
     const codeSnippets = request.code;
-    const results: boolean[] = [];
 
-    codeSnippets.forEach((snippet: any) => {
+    if (request.action === "checkCodeCPP") {
+      const results: boolean[] = [];
 
-      results.push(checkCodeIsCpp(snippet));
-    });
+      //result[0] = await checkCodeIsCpp(codeSnippets[0]);
 
-    sendResponse({ action: "codeCheckedCPP", results: results });
-  }
-  else if (request.action === "checkCodeSecure") {
-    const codeSnippets = request.code;
-    const results: string[] = [];
+      codeSnippets.forEach((snippet: any) => {
 
-    codeSnippets.forEach((snippet: any) => {
+        results.push(checkCodeIsCpp(snippet));
+      });
 
-      results.push(checkCodeIsSecure(snippet.code));
-    });
-    
-        sendResponse({ action: "codeCheckedSecure", results: results });
-  }
+      sendResponse({ action: "codeCheckedCPP", results: results });
+    }
+    else if (request.action === "checkCodeSecure") {
+      const results: string[] = [];
 
+      for(var i =0; i < codeSnippets.length; i++)  {
+
+        var result = await checkCodeIsSecure(codeSnippets[i].code);
+        results.push(result);
+        
+    }
+    sendResponse({ action: "codeCheckedSecure", results: results });
+    }
+
+  })();
+
+  return true;
 });

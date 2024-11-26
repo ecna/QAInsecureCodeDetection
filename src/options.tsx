@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
+export function getSetting(): Promise<any> {
+  return new Promise((resolve, reject) => {
+      chrome.storage.sync.get("usedAPIconnector", (result) => {
+          if (chrome.runtime.lastError) {
+              reject(chrome.runtime.lastError);
+          } else {
+              resolve(result["usedAPIconnector"]);
+          }
+      });
+  });
+}
+
+
+
 const Options = () => {
-  const [color, setColor] = useState<string>("");
+  const [API, setAPI] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [like, setLike] = useState<boolean>(false);
 
+  
   useEffect(() => {
     // Restores select box and checkbox state using the preferences
     // stored in chrome.storage.
     chrome.storage.sync.get(
       {
-        favoriteColor: "red",
+        usedAPIconnector: "Gemini",
         likesColor: true,
       },
       (items) => {
-        setColor(items.favoriteColor);
+        setAPI(items.usedAPIconnector);
         setLike(items.likesColor);
       }
     );
@@ -25,7 +40,7 @@ const Options = () => {
     // Saves options to chrome.storage.sync.
     chrome.storage.sync.set(
       {
-        favoriteColor: color,
+        usedAPIconnector: API,
         likesColor: like,
       },
       () => {
@@ -42,14 +57,13 @@ const Options = () => {
   return (
     <>
       <div>
-        Favorite color: <select
-          value={color}
-          onChange={(event) => setColor(event.target.value)}
+        APIconnector api: <select
+          value={API}
+          onChange={(event) => setAPI(event.target.value)}
         >
-          <option value="red">red</option>
-          <option value="green">green</option>
-          <option value="blue">blue</option>
-          <option value="yellow">yellow</option>
+          <option value="Gemini">Gemini</option>
+          <option value="Claude">Claude</option>
+          <option value="GPT">GPT</option>          
         </select>
       </div>
       <div>

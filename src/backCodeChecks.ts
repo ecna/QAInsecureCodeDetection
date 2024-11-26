@@ -1,6 +1,10 @@
 import chatClaudePrompt from "./APIconnectorClaude";
 import chatGeminiPrompt from "./APIconnectorGemini";
 import chatGPTPrompt from "./APIconnectorGPT";
+import ensureAPIConnectorIsSet from "./CheckDefaultSettings";
+
+
+ensureAPIConnectorIsSet();
 
 export function checkCodeIsCpp(snippet: any) {
     let result: boolean = false;
@@ -29,46 +33,60 @@ export function checkCodeIsCppAI(snippet: any) {
     return result;
 }
 
-let result: string = "";
 
-export function checkCodeIsSecure(snippet: any) {
+async function checkCodeIsSecure(snippet: any): Promise<string> {
+    const userPrompt = `Analyze the following code for security issues:\n\n${snippet}`;
+    let result: string = "";
+    var item;
+    try {
 
-    
-    (async () => {
-        const userPrompt = `Analyze the following code for security issues:\n\n${snippet}`;
-        try {
-            //const response = await chatClaudePrompt(userPrompt);
-            //const response = await chatGeminiPrompt(userPrompt);
-            //const response = await chatGPTPrompt(userPrompt);
-            const config = {
-                apiProvider: 'Claude' // Change this to 'GPT' or 'Gemini' to use different APIs
-            };
+        const APItoUse = await chrome.storage.sync.get(['usedAPIconnector']);
+        item = APItoUse['usedAPIconnector'];
 
-            let response;
-            switch (config.apiProvider) {
-                case 'Claude':
-                    response = await chatClaudePrompt(userPrompt);
-                    break;
-                case 'GPT':
-                    response = await chatGPTPrompt(userPrompt);
-                    break;
-                case 'Gemini':
-                    response = await chatGeminiPrompt(userPrompt);
-                    break;
-                default:
-                    throw new Error("Invalid API provider specified in configuration.");
-            }
-            result = response;
-            console.log("API response:", response);
-            return result ?? "No response from the API.";
-        } catch (error) {
-            if (error instanceof Error) {
-                console.error(error.message);
-            } else {
-                console.error("An unknown error occurred");
-            }
+    }catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        } else {
+            console.error("An unknown error occurred");
         }
-    })();
 
-    return result;
+        throw new Error("Failed to get config");
+    }
+
+
+    try {
+        var response;
+        switch (item) {
+            case 'Claude':
+                result = "- Claude \n\n";
+                response = await chatClaudePrompt(userPrompt);
+                break;
+            case 'GPT':
+                result = "- GPT \n\n";
+                response = await chatGPTPrompt(userPrompt);
+                break;
+            case 'Gemini':
+                result = "- Gemini \n\n";
+                response = await chatGeminiPrompt(userPrompt);
+                break;
+            default:
+                throw new Error(result + "Invalid API provider specified in configuration.");
+        }
+
+        result += response ?? "No response from the API.";
+        console.log(result +  " API response:", response);
+        return result;
+
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(result + error.message);
+        } else {
+            console.error(result + "An unknown error occurred");
+        }
+
+        throw new Error(result + "Failed to fetch response from OpenAI API");
+    }
+
 }
+
+export default checkCodeIsSecure;

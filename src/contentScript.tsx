@@ -1,7 +1,10 @@
 import { getCodeSnippets } from "./contentPageContol";
 
 setTimeout(() => {
-  chrome.runtime.sendMessage({ action: "checkCodeCPP", code: getCodeSnippets() }, (response) => {
+
+  var codeSnippert = getCodeSnippets() ;
+
+  chrome.runtime.sendMessage({ action: "checkCodeCPP", code: codeSnippert }, (response) => {
     // Got an asynchronous response with the data from the background script
     if (response.action === "codeCheckedCPP") {
       const codeBlocks = document.querySelectorAll('pre code');
@@ -14,11 +17,9 @@ setTimeout(() => {
       }
     }
   });
-}, 0);
 
-
-setTimeout(() => {
-  chrome.runtime.sendMessage({ action: "checkCodeSecure", code: getCodeSnippets() }, (response) => {
+  setTimeout(() => {
+  chrome.runtime.sendMessage({ action: "checkCodeSecure", code: codeSnippert }, (response) => {
     // Got an asynchronous response with the data from the background script
     if (response.action === "codeCheckedSecure") {
       const codeBlocks = document.querySelectorAll('pre code');
@@ -26,11 +27,14 @@ setTimeout(() => {
       for (let i = 0; i < codeBlocks.length; i++) {
         const result = response.results[i];
 
-        console.log("Result: ", result);
+        console.log("Result:", result);
       }
     }
   });
-}, 0);
+},200);
+
+
+}, 500);
 
 function addCheckMark(codeElement: HTMLElement, isCpp: boolean) {
   const checkMark = document.createElement('div');
@@ -44,12 +48,12 @@ function addCheckMark(codeElement: HTMLElement, isCpp: boolean) {
   if (codeElement.parentNode) codeElement.parentNode.insertBefore(checkMark, codeElement);
 }
 
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  if (msg.color) {
-    console.log("Receive color = " + msg.color);
-    document.body.style.backgroundColor = msg.color;
-    sendResponse("Change color to " + msg.color);
-  } else {
-    sendResponse("Color message is none.");
-  }
-});
+// chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+//   if (msg.color) {
+//     console.log("Receive color = " + msg.color);
+//     document.body.style.backgroundColor = msg.color;
+//     sendResponse("Change color to " + msg.color);
+//   } else {
+//     sendResponse("Color message is none.");
+//   }
+// });
