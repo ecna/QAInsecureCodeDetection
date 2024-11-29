@@ -1,11 +1,14 @@
-import chatClaudePrompt from "./APIconnectorClaude";
-import chatGeminiPrompt from "./APIconnectorGemini";
-import chatGPTPrompt from "./APIconnectorGPT";
-import ensureAPIConnectorIsSet from "./CheckDefaultSettings";
+import chatClaudePrompt from "./apiConnectorClaude";
+import chatGeminiPrompt from "./apiConnectorGemini";
+import chatGPTPrompt from "./apiConnectorGPT";
+import { ensureAPIConnectorIsSet } from "./checkDefaultSettings";
+import { ensureDatasetModeIsSet } from "./checkDefaultSettings";
 
 
 ensureAPIConnectorIsSet();
+ensureDatasetModeIsSet();
 
+// This function checks if the code snippet is in C++ language
 export function checkCodeIsCpp(snippet: any) {
     let result: boolean = false;
     return snippet.language === 'lang-cpp';
@@ -33,7 +36,7 @@ export function checkCodeIsCppAI(snippet: any) {
     return result;
 }
 
-
+// This function checks if the code snippet is secure by using the LLM model API's
 async function checkCodeIsSecure(snippet: any): Promise<string> {
     const userPrompt = `Analyze the following code for security issues:\n\n${snippet}`;
     let result: string = "";

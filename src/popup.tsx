@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 const Popup = () => {
   const [API, setAPI] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-  const [testMode, setTestMode] = useState<boolean>(false);
+  const [datasetMode, setDatasetMode] = useState<boolean>(false);
 
   
   useEffect(() => {
@@ -13,11 +13,11 @@ const Popup = () => {
     chrome.storage.sync.get(
       {
         usedAPIconnector: "Gemini",
-        testModeOn: true,
+        datasetModeOn: false,
       },
       (items) => {
         setAPI(items.usedAPIconnector);
-        setTestMode(items.testModeOn);
+        setDatasetMode(items.datasetModeOn);
       }
     );
   }, []);
@@ -27,7 +27,7 @@ const Popup = () => {
     chrome.storage.sync.set(
       {
         usedAPIconnector: API,
-        testModeOn: testMode,
+        datasetModeOn: datasetMode,
       },
       () => {
         // Update status to let user know options were saved.
@@ -56,10 +56,10 @@ const Popup = () => {
         <label>
           <input
             type="checkbox"
-            checked={testMode}
-            onChange={(event) => setTestMode(event.target.checked)}
+            checked={datasetMode}
+            onChange={(event) => setDatasetMode(event.target.checked)}
           />
-          test mode
+          dataset mode
         </label>
       </div>
       <div>{status}</div>

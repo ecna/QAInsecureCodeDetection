@@ -8,6 +8,7 @@ import checkCodeIsSecure from "./backCodeChecks";
 
 // polling();
 
+// Listen for messages from the content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
 

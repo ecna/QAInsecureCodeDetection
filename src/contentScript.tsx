@@ -1,40 +1,76 @@
-import { getCodeSnippets } from "./contentPageContol";
+import { getCodeSnippets } from "./codeCollectors";
+import { getCodeFromDataset } from "./codeCollectors";
+
+start();
+
+async function start() {
+  const testMode = await chrome.storage.sync.get(['datasetModeOn']);
+
+  if (testMode['datasetModeOn']) {
+    console.log("\n\nTest mode is on: " + testMode['datasetModeOn'] + "\n\n");
+
+    datasetMain();
+  }
+  else{
+    console.log("\n\nTest mode is off: " + testMode['datasetModeOn' ] + "\n\n");
+    while(document.readyState != "complete") {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    webPageMain();
+  }
+  
+}
+
+async function datasetMain() {
+
+  var codeFromDataset = await getCodeFromDataset();
+
+  chrome.runtime.sendMessage({ action: "checkCodeSecure", code: codeFromDataset }, (response) => {
+    // Got an asynchronous response with the data from the background script
+    if (response.action === "codeCheckedSecure") {
+
+      for (let i = 0; i < response.results.length; i++) {
+        const result = response.results[i];
+
+        console.log("\nResult:", result);
+      }
+    }
+  });
+}
 
 
-window.addEventListener("load", myMain, false);
+function webPageMain() {
 
-function myMain() {
+  var codeSnippert = getCodeSnippets();
 
-    var codeSnippert = getCodeSnippets();
+  chrome.runtime.sendMessage({ action: "checkCodeCPP", code: codeSnippert }, (response) => {
+    // Got an asynchronous response with the data from the background script
+    if (response.action === "codeCheckedCPP") {
+      const codeBlocks = document.querySelectorAll('pre code');
 
-    chrome.runtime.sendMessage({ action: "checkCodeCPP", code: codeSnippert }, (response) => {
+      for (let i = 0; i < codeBlocks.length; i++) {
+        const result = response.results[i];
+
+        const codeElement = codeBlocks[i] as HTMLElement;
+        addCheckMark(codeElement, result);
+      }
+    }
+  });
+
+  setTimeout(() => {
+    chrome.runtime.sendMessage({ action: "checkCodeSecure", code: codeSnippert }, (response) => {
       // Got an asynchronous response with the data from the background script
-      if (response.action === "codeCheckedCPP") {
+      if (response.action === "codeCheckedSecure") {
         const codeBlocks = document.querySelectorAll('pre code');
 
         for (let i = 0; i < codeBlocks.length; i++) {
           const result = response.results[i];
 
-          const codeElement = codeBlocks[i] as HTMLElement;
-          addCheckMark(codeElement, result);
+          console.log("\nResult:", result);
         }
       }
     });
-
-    setTimeout(() => {
-      chrome.runtime.sendMessage({ action: "checkCodeSecure", code: codeSnippert }, (response) => {
-        // Got an asynchronous response with the data from the background script
-        if (response.action === "codeCheckedSecure") {
-          const codeBlocks = document.querySelectorAll('pre code');
-
-          for (let i = 0; i < codeBlocks.length; i++) {
-            const result = response.results[i];
-
-            console.log("Result:", result);
-          }
-        }
-      });
-    }, 200);
+  }, 200);
 
   function addCheckMark(codeElement: HTMLElement, isCpp: boolean) {
     const checkMark = document.createElement('div');
@@ -48,14 +84,5 @@ function myMain() {
     if (codeElement.parentNode) codeElement.parentNode.insertBefore(checkMark, codeElement);
   }
 
-  // chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  //   if (msg.color) {
-  //     console.log("Receive color = " + msg.color);
-  //     document.body.style.backgroundColor = msg.color;
-  //     sendResponse("Change color to " + msg.color);
-  //   } else {
-  //     sendResponse("Color message is none.");
-  //   }
-  // });
-
 }
+

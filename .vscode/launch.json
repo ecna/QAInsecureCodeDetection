@@ -12,7 +12,17 @@
           "--load-extension=${workspaceFolder}/dist",
           "--remote-debugging-port=9222"
         ]
-      }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch dataset server",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "program": "${workspaceFolder}/dataset_server/build/index.js",
+        "preLaunchTask": "tsc: watch - tsconfig.json"
+    }
     ]
   }
   

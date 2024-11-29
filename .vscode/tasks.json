@@ -5,6 +5,20 @@
     "command": "npm",
     "tasks": [
         {
+			"label": "tsc: watch - tsconfig.json",
+			"type": "typescript",
+			"tsconfig": "dataset_server/tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+			
+		},
+        {
             "label": "install",
             "type": "shell",
             "command": "npm",

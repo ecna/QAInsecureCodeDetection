@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 
+// This function sends a prompt to the GPT-4o model and returns the response.
 async function chatGPTPrompt(prompt: string): Promise<string> {
     const openai = new OpenAI({
         apiKey: "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",

@@ -11,5 +11,8 @@
         "noEmitOnError": true,
         "jsx": "react",
         "typeRoots": [ "node_modules/@types" ]
-    }
+    },
+    "exclude": [
+    "dataset_server"  // The folder you want to exclude
+  ]
 }

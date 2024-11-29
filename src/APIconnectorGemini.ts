@@ -13,7 +13,7 @@ const geminiConfig = {
 
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro", ...geminiConfig });
 
-
+// This function sends a prompt to the Gemini model and returns the response
 async function chatGeminiPrompt(prompt: string): Promise<string> {
 
     try {

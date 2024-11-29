@@ -7,7 +7,7 @@ const anthropic = new Anthropic({
 });
 
 
-
+// This function sends a prompt to the Claude model and returns the response
 async function chatClaudePrompt(prompt: string): Promise<string> {
 
     try {
