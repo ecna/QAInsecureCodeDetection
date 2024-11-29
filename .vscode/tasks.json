@@ -5,43 +5,92 @@
     "command": "npm",
     "tasks": [
         {
-			"label": "tsc: watch - tsconfig.json",
-			"type": "typescript",
-			"tsconfig": "dataset_server/tsconfig.json",
-			"option": "watch",
-			"problemMatcher": [
-				"$tsc-watch"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-			
-		},
+            "label": "start dataset server",
+            "type": "shell",
+            "command": "node",
+            "isBackground": true,
+            "args": [
+                "dataset_server/build/index.js"
+            ],
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+        {
+            "label": "stop dataset server",
+            "type": "shell",
+            "command": "echo ${input:terminate}",
+            "problemMatcher": []
+        },
+        {
+            "label": "tsc: watch - tsconfig.json",
+            "type": "typescript",
+            "tsconfig": "dataset_server/tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
         {
             "label": "install",
             "type": "shell",
             "command": "npm",
-            "args": ["install"]
+            "args": [
+                "install"
+            ]
         },
         {
             "label": "update",
             "type": "shell",
             "command": "npm",
-            "args": ["update"]
+            "args": [
+                "update"
+            ]
         },
         {
             "label": "test",
             "type": "shell",
             "command": "npm",
-            "args": ["run", "test"]
+            "args": [
+                "run",
+                "test"
+            ]
         },
         {
             "label": "build",
             "type": "shell",
             "group": "build",
             "command": "npm",
-            "args": ["run", "watch"]
+            "args": [
+                "run",
+                "watch"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "terminateAll"
         }
     ]
 }

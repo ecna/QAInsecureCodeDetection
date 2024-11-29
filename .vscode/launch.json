@@ -11,7 +11,9 @@
         "runtimeArgs": [
           "--load-extension=${workspaceFolder}/dist",
           "--remote-debugging-port=9222"
-        ]
+        ],
+        "preLaunchTask": "start dataset server",
+        "postDebugTask": "stop dataset server"
       },
       {
         "type": "node",
