@@ -11,19 +11,23 @@ async function start() {
 
     datasetMain();
   }
-  else{
-    console.log("\n\nTest mode is off: " + testMode['datasetModeOn' ] + "\n\n");
-    while(document.readyState != "complete") {
+  else {
+    console.log("\n\nTest mode is off: " + testMode['datasetModeOn'] + "\n\n");
+    while (document.readyState != "complete") {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     webPageMain();
   }
-  
+
 }
 
 async function datasetMain() {
 
+  document.body.innerHTML = ''; 
+
   var codeFromDataset = await getCodeFromDataset();
+
+  printResultInHTML('Code to Analyse', codeFromDataset[0].code, document.body);
 
   chrome.runtime.sendMessage({ action: "checkCodeSecure", code: codeFromDataset }, (response) => {
     // Got an asynchronous response with the data from the background script
@@ -32,6 +36,7 @@ async function datasetMain() {
       for (let i = 0; i < response.results.length; i++) {
         const result = response.results[i];
 
+        printResultInHTML('Answer', result, document.body);
         console.log("\nResult:", result);
       }
     }
@@ -40,7 +45,7 @@ async function datasetMain() {
 
 
 function webPageMain() {
-
+  
   var codeSnippert = getCodeSnippets();
 
   chrome.runtime.sendMessage({ action: "checkCodeCPP", code: codeSnippert }, (response) => {
@@ -67,6 +72,10 @@ function webPageMain() {
           const result = response.results[i];
 
           console.log("\nResult:", result);
+
+          const codeElement = codeBlocks[i] as HTMLElement;
+
+          printResultInHTML('Answer', result, codeElement);
         }
       }
     });
@@ -84,5 +93,17 @@ function webPageMain() {
     if (codeElement.parentNode) codeElement.parentNode.insertBefore(checkMark, codeElement);
   }
 
+}
+
+function printResultInHTML(title: string, result: any, codeElement: HTMLElement) {
+  const div = document.createElement('div');
+  const heading = document.createElement('h1');
+  heading.textContent = title;
+  const paragraph = document.createElement('pre');
+  paragraph.textContent = result;
+
+  div.appendChild(heading);
+  div.appendChild(paragraph);
+  codeElement.appendChild(div);
 }
 
