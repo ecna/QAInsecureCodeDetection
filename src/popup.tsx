@@ -5,6 +5,11 @@ const Popup = () => {
   const [API, setAPI] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [datasetMode, setDatasetMode] = useState<boolean>(false);
+  const [APIKeys, setAPIKeys] = useState<{ GPT: boolean; Gemini: boolean; Claude: boolean }>({
+    GPT: false,
+    Gemini: false,
+    Claude: false,
+  });
 
   
   useEffect(() => {
@@ -18,6 +23,11 @@ const Popup = () => {
       (items) => {
         setAPI(items.usedAPIconnector);
         setDatasetMode(items.datasetModeOn);
+        setAPIKeys({
+          GPT: (items.GPT == "" ? false : true),
+          Gemini:  (items.Gemini == "" ? false : true),
+          Claude:  (items.Claude == "" ? false : true) ,
+        });
       }
     );
   }, []);
@@ -43,13 +53,13 @@ const Popup = () => {
   return (
     <>
       <div>
-        APIconnector api: <select style={{ minWidth: "250px" }}
+          Active API: <select style={{ minWidth: "250px" }}
           value={API}
           onChange={(event) => setAPI(event.target.value)}
         >
-          <option value="Gemini">Gemini</option>
-          <option value="Claude">Claude</option>
-          <option value="GPT">GPT</option>          
+          <option value="Gemini" disabled={!APIKeys.Gemini}>Gemini</option>
+          <option value="Claude" disabled={!APIKeys.Claude}>Claude</option>
+          <option value="GPT" disabled={!APIKeys.GPT}>GPT</option>        
         </select>
       </div>
       <div>

@@ -4,7 +4,7 @@
       {
         "type": "chrome",
         "request": "launch",
-        "name": "Launch Chrome against Extension",
+        "name": "Launch Chrome with Extension",
         //  "url": "https://stackoverflow.com/questions/50757447/cast-c-like-pointer-to-c-matrix",  // Only if you're testing a web app related to the extension
         "webRoot": "${workspaceFolder}",
         "file": "${workspaceFolder}/context_page_minimal.html",
@@ -23,7 +23,7 @@
             "<node_internals>/**"
         ],
         "program": "${workspaceFolder}/dataset_server/build/index.js",
-        "preLaunchTask": "tsc: watch - tsconfig.json"
+        "preLaunchTask": "dataset server: watch"
     }
     ]
   }

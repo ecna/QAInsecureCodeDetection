@@ -37,7 +37,16 @@
             "problemMatcher": []
         },
         {
-            "label": "tsc: watch - tsconfig.json",
+            "label": "dataset server: build",
+            "type": "typescript",
+            "tsconfig": "dataset_server/tsconfig.json",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "dataset server: watch",
             "type": "typescript",
             "tsconfig": "dataset_server/tsconfig.json",
             "option": "watch",
@@ -50,7 +59,7 @@
             }
         },
         {
-            "label": "install",
+            "label": "install extension",
             "type": "shell",
             "command": "npm",
             "args": [
@@ -58,7 +67,7 @@
             ]
         },
         {
-            "label": "update",
+            "label": "update extension",
             "type": "shell",
             "command": "npm",
             "args": [
@@ -66,7 +75,7 @@
             ]
         },
         {
-            "label": "test",
+            "label": "test extension",
             "type": "shell",
             "command": "npm",
             "args": [
@@ -75,7 +84,7 @@
             ]
         },
         {
-            "label": "build",
+            "label": "build extension",
             "type": "shell",
             "group": "build",
             "command": "npm",

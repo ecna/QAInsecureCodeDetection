@@ -3,10 +3,11 @@ import chatGeminiPrompt from "./apiConnectorGemini";
 import chatGPTPrompt from "./apiConnectorGPT";
 import { ensureAPIConnectorIsSet } from "./checkDefaultSettings";
 import { ensureDatasetModeIsSet } from "./checkDefaultSettings";
-
+import { ensureDatasetServerIsSet } from "./checkDefaultSettings";
 
 ensureAPIConnectorIsSet();
 ensureDatasetModeIsSet();
+ensureDatasetServerIsSet();
 
 // This function checks if the code snippet is in C++ language
 export function checkCodeIsCpp(snippet: any) {

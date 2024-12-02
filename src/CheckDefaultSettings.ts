@@ -37,6 +37,45 @@ async function ensureAPIConnectorIsSet(): Promise<void> {
 
 export {ensureAPIConnectorIsSet};
 
+// This function is used to check if the 'datasetServer' setting is set in chrome.storage.sync.
+async function ensureDatasetServerIsSet(): Promise<void> {
+    try {
+        // Retrieve the value of 'datasetServer' from chrome.storage.sync
+        const result = await new Promise<{ datasetServer?: string }>((resolve, reject) => {
+            chrome.storage.sync.get(['datasetServer'], (items) => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve(items);
+                }
+            });
+        });
+
+        // Check if 'datasetServer' is not set or empty
+        const datasetServer = result.datasetServer;
+        if (!datasetServer || datasetServer === "" || datasetServer === undefined) {
+            // If not set, update it to "defaultServer"
+            await new Promise<void>((resolve, reject) => {
+                chrome.storage.sync.set({ datasetServer: "http://127.0.0.1:3000" }, () => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+
+            console.log("datasetServer was empty or not set. Updated to 'defaultServer'.");
+        } else {
+            console.log("datasetServer is already set to:", datasetServer);
+        }
+    } catch (error) {
+        console.error("Error ensuring dataset server is set:", error);
+    }
+}
+
+export { ensureDatasetServerIsSet };
+
 // This function is used to check if the 'datasetModeOn' setting is set in chrome.storage.sync.
 async function ensureDatasetModeIsSet(): Promise<void> {
     try {

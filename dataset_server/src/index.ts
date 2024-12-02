@@ -38,7 +38,9 @@ const server: http.Server = http.createServer((req: http.IncomingMessage, res: h
 
         jsonStream.destroy();
         fileStream.destroy();
-        console.log('Finished processing JSON file. number of CWE-119: ', counter);
+
+        console.log('Finished processing JSON file. Found: ' + CWE + ' - number: ' + counter);
+        
         res.write(JSON.stringify(item));
         res.end();
 
@@ -66,5 +68,5 @@ jsonStream.on('error', (err: Error)  => {
 });
 
 server.listen(port, hostname, () => {
-  console.log(`Server1 running at http://${hostname}:${port}/`);
+  console.log(`Dataset server running at http://${hostname}:${port}/`);
 });

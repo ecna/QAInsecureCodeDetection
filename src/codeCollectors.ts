@@ -1,6 +1,9 @@
 
 // This file contains functions to collect code snippets from the current page and from a dataset.
 
+var serverAddress = "";
+
+
 // This function collects code snippets from the current page.
 export function getCodeSnippets() {
 
@@ -29,9 +32,14 @@ export async function getCodeFromDataset() {
 
   let codeSnippets: { code: string; language: string; }[] = [];
 
+  if (serverAddress === "") {
+    const APItoUse = await chrome.storage.sync.get(['datasetServer']);
+    serverAddress = APItoUse['datasetServer'];
+}
+
   try {
     // Fetch the data from the API. Which CWE's and how many must be placed in a config file
-    const response = await fetch('http://localhost:3000/?cwe=119&index=1');
+    const response = await fetch(serverAddress + '/?cwe=119&index=1');
     const resJson = await response.json();
 
     console.log(JSON.stringify(resJson.func_before));

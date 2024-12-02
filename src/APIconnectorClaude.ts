@@ -2,13 +2,19 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 
-const anthropic = new Anthropic({
-    apiKey: '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', // defaults to process.env["ANTHROPIC_API_KEY"]
-});
-
+var APIkey = "";
 
 // This function sends a prompt to the Claude model and returns the response
 async function chatClaudePrompt(prompt: string): Promise<string> {
+
+    if (APIkey === "") {
+        const APItoUse = await chrome.storage.sync.get(['Claude']);
+        APIkey = APItoUse['Claude'];
+    }
+
+    const anthropic = new Anthropic({
+        apiKey: APIkey, // defaults to process.env["ANTHROPIC_API_KEY"]
+    });
 
     try {
         const result = await anthropic.messages.create({
