@@ -41,7 +41,7 @@ async function chatGeminiPrompt(prompt: string): Promise<string> {
         maxOutputTokens: 50, //correspond to roughly 600-800 words.
     };
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", ...geminiConfig });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro", ...geminiConfig });
 
     try {
         const result = await model.generateContent(prompt);
