@@ -25,6 +25,14 @@ const server: http.Server = http.createServer((req: http.IncomingMessage, res: h
   else if (req.url === '/sard_1000') {
     getSARDbadDataset(res, "1000");
   }
+  else if (req.url === '/sard_1000_30_gemini') {
+    getSARDbadDataset(res, "1000_30_gemini");
+  }
+  else if (req.url === '/sard_1000_30_gpt') {
+    getSARDbadDataset(res, "1000_30_gpt");
+  }else if (req.url === '/sard_1000_30_claude') {
+    getSARDbadDataset(res, "1000_30_claude");
+  }
   else {
     getOneCweByIndex(req, res);
   }
@@ -43,6 +51,15 @@ function getSARDbadDataset(res: http.ServerResponse<http.IncomingMessage>, type:
 
   if(type === "1000"){
     sardFilePath = './dataset_server/datasets/SARD/sard_1000_subset.json'; // Path to your SARD JSON file
+  }
+  else if(type === "1000_30_gemini"){
+    sardFilePath = './dataset_server/datasets/SARD/sard_1000_subset_30_gemini.json'; // Path to your SARD JSON file
+  }
+  else if(type === "1000_30_gpt"){
+    sardFilePath = './dataset_server/datasets/SARD/sard_1000_subset_30_gpt.json'; // Path to your SARD JSON file
+  }
+  else if(type === "1000_30_claude"){
+    sardFilePath = './dataset_server/datasets/SARD/sard_1000_subset_30_claude.json'; // Path to your SARD JSON file
   }
   else if (type === "bad") {
   

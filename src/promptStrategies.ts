@@ -84,8 +84,25 @@ const strategies: string[] = [
     Provide explanations in clear and concise language suitable for developers.
     Prioritize identifying critical and high-severity issues first, followed by lower-severity ones.
     Document your reasoning for all conclusions to ensure transparency and reproducibility.
+    Your response MUST be in valid JSON format with no extra information, characters or newlines outside the json object.
+    Double-check your analysis and ensure the JSON is valid and accurate. Check for any extra or missing characters or newlines.
+
 
     Output Format:
+
+    {
+  "Secure": false,
+  "Explanation": "",
+  "Vulnerabilities Found": {
+    "Issue1": "[line number(s)] - Description (CWE-ID)",
+    "Issue2": "[line number(s)] - Description (CWE-ID)"
+  },
+  "Improvement": {
+    "Fix1": "Suggested Fix for Issue 1",
+    "Fix2": "Suggested Fix for Issue 2"
+  },
+  "FinalCode": ""
+}
 
     1) Security Assessment:
     Secure/Not Secure

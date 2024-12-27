@@ -1,0 +1,227 @@
+{
+    "416": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-401"
+                ],
+                "filename": "000099295_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "\n\n#include <wchar.h>\n\nnamespace GenNS1\n{\n\n\n\nclass GenClass1\n{\npublic:\n    GenClass1(char * dataCopy);\n    ~GenClass1();\n\nprivate:\n    char * data;\n};\n\n}\n\n\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(char * dataCopy)\n{\n    data = dataCopy;\n    data = (char *)malloc(100*sizeof(char));\n    strcpy(data, \"A String\");\n    printLine(data);\n}\n\nGenClass1::~GenClass1()\n{\n    ; \n}\n}\n\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps()\n{\n    char * data;\n    data = NULL;\n    GenClass1 var1(data);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    401,
+                    476,
+                    415,
+                    416
+                ]
+            }
+        }
+    },
+    "415": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-401"
+                ],
+                "filename": "000002054_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    401,
+                    476,
+                    415,
+                    789
+                ]
+            }
+        }
+    },
+    "476": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-401"
+                ],
+                "filename": "000002054_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    401,
+                    476,
+                    415,
+                    789
+                ]
+            }
+        }
+    },
+    "401": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-401"
+                ],
+                "filename": "000002054_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    401,
+                    476,
+                    415,
+                    789
+                ]
+            }
+        }
+    },
+    "775": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-773"
+                ],
+                "filename": "000116659_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    data = fopen(\", \"w+\");\n    if (data != NULL)\n    {\n        fclose(data);\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    404,
+                    910,
+                    775
+                ]
+            }
+        }
+    },
+    "762": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-401"
+                ],
+                "filename": "000099389_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include <map>\n\n#include <wchar.h>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(map<int, int64_t *> dataMap)\n{\n    int64_t * data = dataMap[2];\n    ; \n}\n\n} #include <map>\n\n#include <wchar.h>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(map<int, int64_t *> dataMap);\n\nvoid qazmlps()\n{\n    int64_t * data;\n    map<int, int64_t *> dataMap;\n    data = NULL;\n    data = (int64_t *)calloc(100, sizeof(int64_t));\n    data[0] = 5LL;\n    printLongLongLine(data[0]);\n    dataMap[0] = data;\n    dataMap[1] = data;\n    dataMap[2] = data;\n    ppoeidn(dataMap);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    401,
+                    476,
+                    762,
+                    789
+                ]
+            }
+        }
+    },
+    "789": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-190"
+                ],
+                "filename": "000083008_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(int &data)\n{\n    {\n#ifdef _WIN32\n        WSADATA wsaData;\n        int wsaDataInit = 0;\n#endif\n        int recvResult;\n        struct sockaddr_in service;\n        SOCKET connectSocket = INVALID_SOCKET;\n        char inputBuffer[CHAR_ARRAY_SIZE];\n        do\n        {\n#ifdef _WIN32\n            if (WSAStartup(MAKEWORD(2,2), &wsaData) != NO_ERROR)\n            {\n                break;\n            }\n            wsaDataInit = 1;\n#endif\n            connectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);\n            if (connectSocket == INVALID_SOCKET)\n            {\n                break;\n            }\n            memset(&service, 0, sizeof(service));\n            service.sin_family = AF_INET;\n            service.sin_addr.s_addr = inet_addr(IP_ADDRESS);\n            service.sin_port = htons(TCP_PORT);\n            if (connect(connectSocket, (struct sockaddr*)&service, sizeof(service)) == SOCKET_ERROR)\n            {\n                break;\n            }\n            recvResult = recv(connectSocket, inputBuffer, CHAR_ARRAY_SIZE - 1, 0);\n            if (recvResult == SOCKET_ERROR || recvResult == 0)\n            {\n                break;\n            }\n            inputBuffer[recvResult] = '\\0';\n            data = atoi(inputBuffer);\n        }\n        while (0);\n        if (connectSocket != INVALID_SOCKET)\n        {\n            CLOSE_SOCKET(connectSocket);\n        }\n#ifdef _WIN32\n        if (wsaDataInit)\n        {\n            WSACleanup();\n        }\n#endif\n    }\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(int &data);\n\nvoid qazmlps()\n{\n    int data;\n    data = 0;\n    ppoeidn(data);\n    {\n        int result = data + 1;\n        printIntLine(result);\n    }\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    129,
+                    252,
+                    789,
+                    242
+                ]
+            }
+        }
+    },
+    "773": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-773"
+                ],
+                "filename": "000116660_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    if(1)\n    {\n        data = fopen(\", \"w+\");\n        if (data != NULL)\n        {\n            fclose(data);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    404,
+                    773,
+                    910
+                ]
+            }
+        }
+    },
+    "590": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-590"
+                ],
+                "filename": "000106162_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "\n\n#include <wchar.h>\n\nnamespace GenNS1\n{\n\n\n\nvoid xnzxbnd(char * data);\n\nvoid ppoeidn(char * data)\n{\n    xnzxbnd(data);\n}\n\n} \n\n#include <wchar.h>\n\nnamespace GenNS1\n{\n\n\n\nvoid xnzxbnd(char * data)\n{\n    printLine(data);\n    delete [] data;\n}\n\n} \n\n#include <wchar.h>\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL; \n    {\n        char * dataBuffer = (char *)ALLOCA(100*sizeof(char));\n        memset(dataBuffer, 'A', 100-1); \n        dataBuffer[100-1] = '\\0'; \n        data = dataBuffer;\n    }\n    ppoeidn(data);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    590,
+                    415,
+                    401
+                ]
+            }
+        }
+    },
+    "190": {
+        "true_positive": null,
+        "false_negative": null,
+        "false_positive": {
+            "data": {
+                "cwe_ids": [
+                    "CWE-190"
+                ],
+                "filename": "000082227_1.txt"
+            },
+            "language": "lang-cpp",
+            "code": "#include \"std_testcase.h\"\n\n#include <math.h>\n\n\n\nvoid ppoeidn()\n{\n    char data;\n    char *dataPtr1 = &data;\n    char *dataPtr2 = &data;\n    data = ' ';\n    {\n        char data = *dataPtr1;\n        fscanf (stdin, \"%c\", &data);\n        *dataPtr1 = data;\n    }\n    {\n        char data = *dataPtr2;\n        {\n            char result = data * data;\n            printHexCharLine(result);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+            "result": {
+                "isCodeSecure": false,
+                "CWEs": [
+                    190,
+                    20
+                ]
+            }
+        }
+    }
+}

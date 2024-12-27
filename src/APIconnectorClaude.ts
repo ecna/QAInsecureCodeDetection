@@ -48,7 +48,7 @@ async function chatClaudePrompt(prompt: string): Promise<string> {
         try {
             const retryResult = await anthropic.messages.create({
                 model: "claude-3-5-sonnet-20241022",
-                max_tokens: 100,
+                max_tokens: 50,
                 temperature: 0,
                 messages: [
                     { role: "user", content: prompt }

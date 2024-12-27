@@ -35,7 +35,7 @@ async function chatGeminiPrompt(prompt: string): Promise<string> {
 
     const geminiConfig = {
         temperature: 0,
-        // system: "Don't give an explanation and only answer with JSON object and without new line characters (\n). So no extra prefixes or suffixes to the JSON data (RAW JSON data only!).",
+        //  system: "only answer with JSON object and without new line characters (\n). So no extra prefixes or suffixes to the JSON data (RAW JSON data only!).",
         topP: 0.95,
         responseSchema: schema,
         maxOutputTokens: 50, //correspond to roughly 600-800 words.

@@ -1,0 +1,524 @@
+[
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-416"
+      ],
+      "filename": "000102225_1.txt",
+      "type": "TP",
+      "cwe": "CWE-416",
+      "actual_cwes": [
+        "CWE-416"
+      ],
+      "predicted_cwes": [
+        "CWE-416",
+        "CWE-690",
+        "CWE-824"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn(char * * dataPtr)\n{\n    char * data = *dataPtr;\n    printLine(data);\n    }\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn(char * * dataPtr);\n\nvoid qazmlps()\n{\n    char * data;\n    data = NULL;\n    data = (char *)malloc(100*sizeof(char));\n    memset(data, 'A', 100-1);\n    data[100-1] = '\\0';\n    free(data);\n    ppoeidn(&data);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-416"
+      ],
+      "filename": "000102413_1.txt",
+      "type": "FN",
+      "cwe": "CWE-416",
+      "actual_cwes": [
+        "CWE-416"
+      ],
+      "predicted_cwes": [
+        "CWE-476",
+        "CWE-690"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    int * data;\n    data = NULL;\n    if(globalReturnsTrue())\n    {\n        data = new int[100];\n        {\n            size_t i;\n            for(i = 0; i < 100; i++)\n            {\n                data[i] = 5;\n            }\n        }\n        delete [] data;\n    }\n    if(globalReturnsTrue())\n    {\n        printIntLine(data[0]);\n        }\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-401"
+      ],
+      "filename": "000099389_1.txt",
+      "type": "FP",
+      "cwe": "CWE-416",
+      "actual_cwes": [
+        "CWE-401"
+      ],
+      "predicted_cwes": [
+        "CWE-401",
+        "CWE-416",
+        "CWE-789"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include <map>\n\n#include <wchar.h>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(map<int, int64_t *> dataMap)\n{\n    int64_t * data = dataMap[2];\n    ; \n}\n\n} #include <map>\n\n#include <wchar.h>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(map<int, int64_t *> dataMap);\n\nvoid qazmlps()\n{\n    int64_t * data;\n    map<int, int64_t *> dataMap;\n    data = NULL;\n    data = (int64_t *)calloc(100, sizeof(int64_t));\n    data[0] = 5LL;\n    printLongLongLine(data[0]);\n    dataMap[0] = data;\n    dataMap[1] = data;\n    dataMap[2] = data;\n    ppoeidn(dataMap);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-415"
+      ],
+      "filename": "000101579_1.txt",
+      "type": "TP",
+      "cwe": "CWE-415",
+      "actual_cwes": [
+        "CWE-415"
+      ],
+      "predicted_cwes": [
+        "CWE-415"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    TwoIntsClass * data;\n    data = NULL;\n    data = new TwoIntsClass[100];\n    delete [] data;\n    delete [] data;\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-415"
+      ],
+      "filename": "000101262_1.txt",
+      "type": "FN",
+      "cwe": "CWE-415",
+      "actual_cwes": [
+        "CWE-415"
+      ],
+      "predicted_cwes": [
+        "CWE-416",
+        "CWE-664"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\n#include <wchar.h>\n\n\n\nextern int var1;\n\nvoid ppoeidn(char * data)\n{\n    if(var1)\n    {\n        free(data);\n    }\n}\n\n\n\n#include <wchar.h>\n\n\n\nint var1 = 0;\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL;\n    data = (char *)malloc(100*sizeof(char));\n    free(data);\n    var1 = 1; \n    ppoeidn(data);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-762"
+      ],
+      "filename": "000113624_1.txt",
+      "type": "FP",
+      "cwe": "CWE-415",
+      "actual_cwes": [
+        "CWE-762"
+      ],
+      "predicted_cwes": [
+        "CWE-401",
+        "CWE-415",
+        "CWE-672"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\nnamespace GenNS1\n{\n\n\n\nclass GenClass1\n{\npublic:\n    GenClass1(int * dataCopy);\n    ~GenClass1();\n\nprivate:\n    int * data;\n};\n\n}\n\n\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(int * dataCopy)\n{\n    data = dataCopy;\n    data = (int *)malloc(100*sizeof(int));\n}\n\nGenClass1::~GenClass1()\n{\n    delete [] data;\n}\n}\n\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps()\n{\n    int * data;\n    data = NULL;\n    GenClass1 * var1 = new GenClass1(data);\n    delete var1;\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-476"
+      ],
+      "filename": "000001993_1.txt",
+      "type": "TP",
+      "cwe": "CWE-476",
+      "actual_cwes": [
+        "CWE-476"
+      ],
+      "predicted_cwes": [
+        "CWE-476",
+        "CWE-690"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include <iostream>\nusing namespace std;\n\nint main()\n{\n\tint *p = 0, k;\n\tcout << \"Hello World!\" << endl;\n\tk = *p;\n\treturn 0;\n}",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-476"
+      ],
+      "filename": "000104781_1.txt",
+      "type": "FN",
+      "cwe": "CWE-476",
+      "actual_cwes": [
+        "CWE-476"
+      ],
+      "predicted_cwes": [
+        "CWE-401",
+        "CWE-672"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\nstatic const int STATIC_CONST_TRUE = 1; \nstatic const int STATIC_CONST_FALSE = 0; \n\n\n\nvoid ppoeidn()\n{\n    if(STATIC_CONST_TRUE)\n    {\n        {\n            int *intPointer = NULL;\n            intPointer = (int *)malloc(sizeof(int));\n            *intPointer = 5;\n            printIntLine(*intPointer);\n            if (intPointer != NULL)\n            {\n                *intPointer = 10;\n            }\n            printIntLine(*intPointer);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-401"
+      ],
+      "filename": "000002054_1.txt",
+      "type": "FP",
+      "cwe": "CWE-476",
+      "actual_cwes": [
+        "CWE-401"
+      ],
+      "predicted_cwes": [
+        "CWE-401",
+        "CWE-672",
+        "CWE-476"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-401"
+      ],
+      "filename": "000002054_1.txt",
+      "type": "TP",
+      "cwe": "CWE-401",
+      "actual_cwes": [
+        "CWE-401"
+      ],
+      "predicted_cwes": [
+        "CWE-401",
+        "CWE-672",
+        "CWE-476"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-401"
+      ],
+      "filename": "000099963_1.txt",
+      "type": "FN",
+      "cwe": "CWE-401",
+      "actual_cwes": [
+        "CWE-401"
+      ],
+      "predicted_cwes": [
+        "CWE-416"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    struct _twoIntsStruct * data;\n    data = NULL;\n    if(globalReturnsTrueOrFalse())\n    {\n        data = new struct _twoIntsStruct[100];\n        data[0].intOne = 0;\n        data[0].intTwo = 0;\n        printStructLine((twoIntsStruct *)&data[0]);\n    }\n    else\n    {\n        struct _twoIntsStruct var2[100];\n        data = var2;\n        data[0].intOne = 0;\n        data[0].intTwo = 0;\n        printStructLine((twoIntsStruct *)&data[0]);\n    }\n    if(globalReturnsTrueOrFalse())\n    {\n        ; \n    }\n    else\n    {\n        delete[] data;\n    }\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-415"
+      ],
+      "filename": "000101434_1.txt",
+      "type": "FP",
+      "cwe": "CWE-401",
+      "actual_cwes": [
+        "CWE-415"
+      ],
+      "predicted_cwes": [
+        "CWE-416",
+        "CWE-401"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\n#include <wchar.h>\n\nnamespace GenNS1\n{\n\n\n\nclass GenClass1\n{\npublic:\n    GenClass1(long * dataCopy);\n    ~GenClass1();\n\nprivate:\n    long * data;\n};\n\n}\n\n\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(long * dataCopy)\n{\n    data = dataCopy;\n    data = (long *)malloc(100*sizeof(long));\n    free(data);\n}\n\nGenClass1::~GenClass1()\n{\n    free(data);\n}\n}\n\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps()\n{\n    long * data;\n    data = NULL;\n    GenClass1 * var1 = new GenClass1(data);\n    delete var1;\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-775"
+      ],
+      "filename": "000116815_1.txt",
+      "type": "TP",
+      "cwe": "CWE-775",
+      "actual_cwes": [
+        "CWE-775"
+      ],
+      "predicted_cwes": [
+        "CWE-775"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        ; \n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-775"
+      ],
+      "filename": "000116803_1.txt",
+      "type": "FN",
+      "cwe": "CWE-775",
+      "actual_cwes": [
+        "CWE-775"
+      ],
+      "predicted_cwes": [
+        "CWE-774"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    ; \n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-773"
+      ],
+      "filename": "000116679_1.txt",
+      "type": "FP",
+      "cwe": "CWE-775",
+      "actual_cwes": [
+        "CWE-773"
+      ],
+      "predicted_cwes": [
+        "CWE-775"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    {\n        FILE * dataCopy = data;\n        FILE * data = dataCopy;\n        data = fopen(\", \"w+\");\n        if (data != NULL)\n        {\n            fclose(data);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-762"
+      ],
+      "filename": "000113224_1.txt",
+      "type": "TP",
+      "cwe": "CWE-762",
+      "actual_cwes": [
+        "CWE-762"
+      ],
+      "predicted_cwes": [
+        "CWE-416",
+        "CWE-762",
+        "CWE-672"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps(char * data);\n\nvoid ppoeidn(char * data)\n{\n    qazmlps(data);\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid func7(char * data);\n\nvoid qazmlps(char * data)\n{\n    func7(data);\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid func7(char * data)\n{\n    delete [] data;\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(char * data);\n\nvoid ppoeidn0()\n{\n    char * data;\n    data = NULL;\n    data = NULL;\n    data = (char *)realloc(data, 100*sizeof(char));\n    ppoeidn(data);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn0();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-762"
+      ],
+      "filename": "000113116_1.txt",
+      "type": "FN",
+      "cwe": "CWE-762",
+      "actual_cwes": [
+        "CWE-762"
+      ],
+      "predicted_cwes": [
+        "CWE-416"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\nnamespace GenNS1\n{\n\n\n\nextern int var1;\n\nvoid ppoeidn(char * data)\n{\n    if(var1)\n    {\n        delete [] data;\n    }\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nint var1 = 0;\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL;\n    data = (char *)calloc(100, sizeof(char));\n    var1 = 1; \n    ppoeidn(data);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-415"
+      ],
+      "filename": "000101371_1.txt",
+      "type": "FP",
+      "cwe": "CWE-762",
+      "actual_cwes": [
+        "CWE-415"
+      ],
+      "predicted_cwes": [
+        "CWE-416",
+        "CWE-664",
+        "CWE-762"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\n#include <wchar.h>\n\n\n\nvoid qazmlps(int * data);\n\nvoid ppoeidn(int * data)\n{\n    qazmlps(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid func7(int * data);\n\nvoid qazmlps(int * data)\n{\n    func7(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn0(int * data);\n\nvoid func7(int * data)\n{\n    ppoeidn0(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn0(int * data)\n{\n    free(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn(int * data);\n\nvoid ppoeidn3()\n{\n    int * data;\n    data = NULL;\n    data = (int *)malloc(100*sizeof(int));\n    free(data);\n    ppoeidn(data);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn3();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-789"
+      ],
+      "filename": "000117257_1.txt",
+      "type": "TP",
+      "cwe": "CWE-789",
+      "actual_cwes": [
+        "CWE-789"
+      ],
+      "predicted_cwes": [
+        "CWE-789",
+        "CWE-824",
+        "CWE-78",
+        "CWE-664"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(size_t &data)\n{\n    {\n#ifdef _WIN32\n        WSADATA wsaData;\n        int wsaDataInit = 0;\n#endif\n        int recvResult;\n        struct sockaddr_in service;\n        SOCKET connectSocket = INVALID_SOCKET;\n        char inputBuffer[CHAR_ARRAY_SIZE];\n        do\n        {\n#ifdef _WIN32\n            if (WSAStartup(MAKEWORD(2,2), &wsaData) != NO_ERROR)\n            {\n                break;\n            }\n            wsaDataInit = 1;\n#endif\n            connectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);\n            if (connectSocket == INVALID_SOCKET)\n            {\n                break;\n            }\n            memset(&service, 0, sizeof(service));\n            service.sin_family = AF_INET;\n            service.sin_addr.s_addr = inet_addr(IP_ADDRESS);\n            service.sin_port = htons(TCP_PORT);\n            if (connect(connectSocket, (struct sockaddr*)&service, sizeof(service)) == SOCKET_ERROR)\n            {\n                break;\n            }\n            recvResult = recv(connectSocket, inputBuffer, CHAR_ARRAY_SIZE - 1, 0);\n            if (recvResult == SOCKET_ERROR || recvResult == 0)\n            {\n                break;\n            }\n            inputBuffer[recvResult] = '\\0';\n            data = strtoul(inputBuffer, NULL, 0);\n        }\n        while (0);\n        if (connectSocket != INVALID_SOCKET)\n        {\n            CLOSE_SOCKET(connectSocket);\n        }\n#ifdef _WIN32\n        if (wsaDataInit)\n        {\n            WSACleanup();\n        }\n#endif\n    }\n}\n\n} \n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#define HELLO_STRING L\"hello\"\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(size_t &data);\n\nvoid qazmlps()\n{\n    size_t data;\n    data = 0;\n    ppoeidn(data);\n    {\n        wchar_t * myString;\n        if (data > wcslen(HELLO_STRING))\n        {\n            myString = (wchar_t *)malloc(data*sizeof(wchar_t));\n            wcscpy(myString, HELLO_STRING);\n            printWLine(myString);\n            free(myString);\n        }\n        else\n        {\n            printLine(\"Input is less than the length of the source string\");\n        }\n    }\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-789"
+      ],
+      "filename": "000117016_1.txt",
+      "type": "FN",
+      "cwe": "CWE-789",
+      "actual_cwes": [
+        "CWE-789"
+      ],
+      "predicted_cwes": [
+        "CWE-78",
+        "CWE-120",
+        "CWE-835"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\n#define HELLO_STRING \"hello\"\n\n\n\nsize_t ppoeidn(size_t data)\n{\n    {\n#ifdef _WIN32\n        WSADATA wsaData;\n        int wsaDataInit = 0;\n#endif\n        int recvResult;\n        struct sockaddr_in service;\n        SOCKET connectSocket = INVALID_SOCKET;\n        char inputBuffer[CHAR_ARRAY_SIZE];\n        do\n        {\n#ifdef _WIN32\n            if (WSAStartup(MAKEWORD(2,2), &wsaData) != NO_ERROR)\n            {\n                break;\n            }\n            wsaDataInit = 1;\n#endif\n            connectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);\n            if (connectSocket == INVALID_SOCKET)\n            {\n                break;\n            }\n            memset(&service, 0, sizeof(service));\n            service.sin_family = AF_INET;\n            service.sin_addr.s_addr = inet_addr(IP_ADDRESS);\n            service.sin_port = htons(TCP_PORT);\n            if (connect(connectSocket, (struct sockaddr*)&service, sizeof(service)) == SOCKET_ERROR)\n            {\n                break;\n            }\n            recvResult = recv(connectSocket, inputBuffer, CHAR_ARRAY_SIZE - 1, 0);\n            if (recvResult == SOCKET_ERROR || recvResult == 0)\n            {\n                break;\n            }\n            inputBuffer[recvResult] = '\\0';\n            data = strtoul(inputBuffer, NULL, 0);\n        }\n        while (0);\n        if (connectSocket != INVALID_SOCKET)\n        {\n            CLOSE_SOCKET(connectSocket);\n        }\n#ifdef _WIN32\n        if (wsaDataInit)\n        {\n            WSACleanup();\n        }\n#endif\n    }\n    return data;\n}\n\n\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\n#define HELLO_STRING \"hello\"\n\n\n\nsize_t ppoeidn(size_t data);\n\nvoid qazmlps()\n{\n    size_t data;\n    data = 0;\n    data = ppoeidn(data);\n    {\n        char * myString;\n        if (data > strlen(HELLO_STRING))\n        {\n            myString = (char *)malloc(data*sizeof(char));\n            strcpy(myString, HELLO_STRING);\n            printLine(myString);\n            free(myString);\n        }\n        else\n        {\n            printLine(\"Input is less than the length of the source string\");\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-190"
+      ],
+      "filename": "000082149_1.txt",
+      "type": "FP",
+      "cwe": "CWE-789",
+      "actual_cwes": [
+        "CWE-190"
+      ],
+      "predicted_cwes": [
+        "CWE-789",
+        "CWE-676"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "\n\ntypedef struct var1\n{\n    char structFirst;\n} var2;\n\n\n\nvoid ppoeidn(var2 myStruct)\n{\n    char data = myStruct.structFirst;\n    {\n        char result = data + 1;\n        printHexCharLine(result);\n    }\n}\n\n\n\ntypedef struct var1\n{\n    char structFirst;\n} var2;\n\n\n\nvoid ppoeidn(var2 myStruct);\n\nvoid qazmlps()\n{\n    char data;\n    var2 myStruct;\n    data = ' ';\n    fscanf (stdin, \"%c\", &data);\n    myStruct.structFirst = data;\n    ppoeidn(myStruct);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-773"
+      ],
+      "filename": "000116659_1.txt",
+      "type": "FN",
+      "cwe": "CWE-773",
+      "actual_cwes": [
+        "CWE-773"
+      ],
+      "predicted_cwes": [
+        "CWE-774"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    data = fopen(\", \"w+\");\n    if (data != NULL)\n    {\n        fclose(data);\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-590"
+      ],
+      "filename": "000106136_1.txt",
+      "type": "FN",
+      "cwe": "CWE-590",
+      "actual_cwes": [
+        "CWE-590"
+      ],
+      "predicted_cwes": [
+        "CWE-416",
+        "CWE-762"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    char * data;\n    data = NULL; \n    {\n        char * dataBuffer = (char *)ALLOCA(100*sizeof(char));\n        memset(dataBuffer, 'A', 100-1); \n        dataBuffer[100-1] = '\\0'; \n        data = dataBuffer;\n    }\n    printLine(data);\n    delete [] data;\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-190"
+      ],
+      "filename": "000082266_1.txt",
+      "type": "TP",
+      "cwe": "CWE-190",
+      "actual_cwes": [
+        "CWE-190"
+      ],
+      "predicted_cwes": [
+        "CWE-190"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    char data;\n    data = ' ';\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        data = CHAR_MAX;\n    }\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        {\n            char result = data + 1;\n            printHexCharLine(result);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-190"
+      ],
+      "filename": "000082110_1.txt",
+      "type": "FN",
+      "cwe": "CWE-190",
+      "actual_cwes": [
+        "CWE-190"
+      ],
+      "predicted_cwes": [
+        "CWE-676",
+        "CWE-787"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    char data;\n    data = ' ';\n    fscanf (stdin, \"%c\", &data);\n    {\n        char result = data + 1;\n        printHexCharLine(result);\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  },
+  {
+    "data": {
+      "cwe_ids": [
+        "CWE-401"
+      ],
+      "filename": "000239723_1.txt",
+      "type": "FP",
+      "cwe": "CWE-190",
+      "actual_cwes": [
+        "CWE-401"
+      ],
+      "predicted_cwes": [
+        "CWE-787",
+        "CWE-190"
+      ]
+    },
+    "language": "lang-cpp",
+    "code": "#include \"std_testcase.h\"\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n\n\nvoid ppoeidn()\n{\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        {\n            int * data = (int *)malloc(100*sizeof(int));\n            if (data == NULL) {exit(-1);}\n            data[0] = 5;\n            printIntLine(data[0]);\n            data = (int *)realloc(data, (130000)*sizeof(int));\n            if (data != NULL)\n            {\n                data[0] = 10;\n                printIntLine(data[0]);\n                free(data);\n            }\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+    "result": {}
+  }
+]

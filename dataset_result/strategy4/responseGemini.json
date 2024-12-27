@@ -1,0 +1,816 @@
+[
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-416"
+            ],
+            "filename": "000102225_1.txt",
+            "type": "TP",
+            "cwe": "CWE-416",
+            "actual_cwes": [
+                "CWE-416"
+            ],
+            "predicted_cwes": [
+                "CWE-416",
+                "CWE-690",
+                "CWE-824"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn(char * * dataPtr)\n{\n    char * data = *dataPtr;\n    printLine(data);\n    }\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn(char * * dataPtr);\n\nvoid qazmlps()\n{\n    char * data;\n    data = NULL;\n    data = (char *)malloc(100*sizeof(char));\n    memset(data, 'A', 100-1);\n    data[100-1] = '\\0';\n    free(data);\n    ppoeidn(&data);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a use-after-free vulnerability. Memory allocated for 'data' is freed, but the pointer is not set to NULL, and it's later used in ppoeidn function.",
+            "Vulnerabilities Found": {
+                "Use After Free": "[lines 27, 30, 31, 13] - The 'data' pointer is freed on line 30, but it's dereferenced again on line 31 when passed to ppoeidn, and within ppoeidn on line 13 when passed to printLine. This results in a use-after-free vulnerability. (CWE-416)"
+            },
+            "Improvement": {
+                "Fix1": "Set the 'data' pointer to NULL immediately after freeing it to prevent accidental use of the dangling pointer. Also, check for NULL before using the pointer in ppoeidn."
+            },
+            "FinalCode": "#include <wchar.h>\n\n\nvoid ppoeidn(char * * dataPtr)\n{\n    char * data = *dataPtr;\n    if (data != NULL) { \n        printLine(data);\n    }\n}\n\n#include <wchar.h>\n\n\nvoid ppoeidn(char * * dataPtr);\n\nvoid qazmlps()\n{\n    char * data;\n    data = NULL;\n    data = (char *)malloc(100*sizeof(char));\n    if (data != NULL) {\n        memset(data, 'A', 100-1);\n        data[100-1] = '\\0';\n        free(data);\n        data = NULL;  // Set data to NULL after free\n    }\n    ppoeidn(&data);\n}\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-416"
+            ],
+            "filename": "000102413_1.txt",
+            "type": "FN",
+            "cwe": "CWE-416",
+            "actual_cwes": [
+                "CWE-416"
+            ],
+            "predicted_cwes": [
+                "CWE-476",
+                "CWE-690"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    int * data;\n    data = NULL;\n    if(globalReturnsTrue())\n    {\n        data = new int[100];\n        {\n            size_t i;\n            for(i = 0; i < 100; i++)\n            {\n                data[i] = 5;\n            }\n        }\n        delete [] data;\n    }\n    if(globalReturnsTrue())\n    {\n        printIntLine(data[0]);\n        }\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a use-after-free vulnerability. Memory is allocated to the 'data' pointer inside the first 'if' block and deallocated using 'delete [] data'. However, the second 'if' block attempts to access the deallocated memory if 'globalReturnsTrue()' returns true in both cases.",
+            "Vulnerabilities Found": {
+                "Use-After-Free": "[line 25, 29] - The code attempts to access memory pointed to by 'data' after it has been freed. (CWE-416)"
+            },
+            "Improvement": {
+                "Fix1": "Check if 'data' has been allocated before accessing it in the second 'if' block.  Also, consolidate the logic to avoid double-checking 'globalReturnsTrue()' and allocate the resource only if actually necessary.",
+                "Fix2": "Avoid separate branches where the allocation logic becomes entangled. A consolidated allocation check makes reasoning about the resource management easier."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\nvoid ppoeidn()\n{\n    int * data = NULL;\n    if (globalReturnsTrue())\n    {\n        data = new int[100];\n        if (data != NULL) { //Added check in case new fails\n            for (size_t i = 0; i < 100; i++)\n            {\n                data[i] = 5;\n            }\n\n            printIntLine(data[0]);\n            delete[] data;\n            data = NULL;  // Reset pointer after deallocation\n        }\n    } \n}\n\n}\n\nusing namespace var1;\n\nint main(int argc, char * argv[])\n{\n    srand((unsigned)time(NULL));\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-401"
+            ],
+            "filename": "000099389_1.txt",
+            "type": "FP",
+            "cwe": "CWE-416",
+            "actual_cwes": [
+                "CWE-401"
+            ],
+            "predicted_cwes": [
+                "CWE-401",
+                "CWE-416",
+                "CWE-789"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include <map>\n\n#include <wchar.h>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(map<int, int64_t *> dataMap)\n{\n    int64_t * data = dataMap[2];\n    ; \n}\n\n} #include <map>\n\n#include <wchar.h>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(map<int, int64_t *> dataMap);\n\nvoid qazmlps()\n{\n    int64_t * data;\n    map<int, int64_t *> dataMap;\n    data = NULL;\n    data = (int64_t *)calloc(100, sizeof(int64_t));\n    data[0] = 5LL;\n    printLongLongLine(data[0]);\n    dataMap[0] = data;\n    dataMap[1] = data;\n    dataMap[2] = data;\n    ppoeidn(dataMap);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a memory leak and potential for double-free vulnerabilities due to improper management of dynamically allocated memory.",
+            "Vulnerabilities Found": {
+                "Issue1": "[lines 28, 32, 33, 34, 46] - Memory leak due to missing `free` of allocated memory. (CWE-401)",
+                "Issue2": "[lines 28, 32, 33, 34, 16] - Potential double free vulnerability due to multiple pointers to same memory location and lack of synchronization on who is responsible for freeing. (CWE-415)"
+            },
+            "Improvement": {
+                "Fix1": "Introduce `free(data)` after the `ppoeidn` call in `qazmlps` to release the allocated memory.",
+                "Fix2": "Redesign data ownership.  Instead of raw pointers, use smart pointers (e.g., `std::shared_ptr`, `std::unique_ptr`) to manage the allocated memory automatically. Determine which part of the code owns the data and make it responsible for its deletion. Using `std::shared_ptr` in this case would manage the resource correctly across multiple map entries pointing to the same data.",
+                "Fix3": "Clarify responsibility for memory management in the `ppoeidn` function.  If the intention was for `ppoeidn` to take ownership, the function signature and implementation should change to reflect this, and documentation should explicitly state it."
+            },
+            "FinalCode": "#include <map>\n#include <wchar.h>\n#include <memory>\n\nusing namespace std;\n\nnamespace GenNS1\n{\n\nvoid ppoeidn(map<int, shared_ptr<int64_t[]>> dataMap)\n{\n    shared_ptr<int64_t[]> data = dataMap[2];\n    ;\n}\n\nvoid qazmlps()\n{\n    shared_ptr<int64_t[]> data(new int64_t[100], default_delete<int64_t[]>());\n    map<int, shared_ptr<int64_t[]>> dataMap;\n    data[0] = 5LL;\n    printLongLongLine(data[0]);\n    dataMap[0] = data;\n    dataMap[1] = data;\n    dataMap[2] = data;\n    ppoeidn(dataMap);\n    // Memory is automatically freed when 'data' goes out of scope\n}\n\n} \n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-415"
+            ],
+            "filename": "000101579_1.txt",
+            "type": "TP",
+            "cwe": "CWE-415",
+            "actual_cwes": [
+                "CWE-415"
+            ],
+            "predicted_cwes": [
+                "CWE-415"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    TwoIntsClass * data;\n    data = NULL;\n    data = new TwoIntsClass[100];\n    delete [] data;\n    delete [] data;\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a double-free vulnerability.  The dynamically allocated array `data` is deleted twice. This can lead to memory corruption and potentially crashes or exploitable vulnerabilities.",
+            "Vulnerabilities Found": {
+                "Double Free": "[17, 18] - The dynamically allocated memory pointed to by 'data' is freed twice. This leads to undefined behavior and potential crashes or security vulnerabilities. (CWE-415)"
+            },
+            "Improvement": {
+                "Fix1": "Remove the second `delete [] data;` statement. Only free the memory once after it has been allocated."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    TwoIntsClass * data;\n    data = NULL;\n    data = new TwoIntsClass[100];\n    delete[] data;\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-415"
+            ],
+            "filename": "000101262_1.txt",
+            "type": "FN",
+            "cwe": "CWE-415",
+            "actual_cwes": [
+                "CWE-415"
+            ],
+            "predicted_cwes": [
+                "CWE-416",
+                "CWE-664"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\n#include <wchar.h>\n\n\n\nextern int var1;\n\nvoid ppoeidn(char * data)\n{\n    if(var1)\n    {\n        free(data);\n    }\n}\n\n\n\n#include <wchar.h>\n\n\n\nint var1 = 0;\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL;\n    data = (char *)malloc(100*sizeof(char));\n    free(data);\n    var1 = 1; \n    ppoeidn(data);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a use-after-free vulnerability. The `uytvbdk` function frees the memory allocated to `data` and then calls `ppoeidn` with the freed pointer. If `var1` is 1, `ppoeidn` will attempt to free the memory again, leading to a double-free error.",
+            "Vulnerabilities Found": {
+                "Issue1": "[lines 27, 29, 30] - Use-after-free vulnerability in `uytvbdk` and `ppoeidn` functions.  The pointer `data` is freed and then passed to the ppoeidn function which may call free() again on the now invalid pointer. (CWE-416)"
+            },
+            "Improvement": {
+                "Fix1": "Remove the call to `ppoeidn` after `data` has been freed.  Alternatively, if `ppoeidn` is intended to potentially free `data`, do not free it in `uytvbdk` and ensure `ppoeidn` is only called once on any allocated pointer. Also initialize `data` to NULL after freeing. If the intention is that `ppoeidn` will manage freeing the memory, ensure that it checks if `data` is NULL before freeing it to avoid double-free."
+            },
+            "FinalCode": "#include <wchar.h>\n\n\nextern int var1;\n\nvoid ppoeidn(char * data)\n{\n    if(var1 && data)  // Check if data is not NULL\n    {\n        free(data);\n    }\n}\n\n#include <wchar.h>\n\nint var1 = 0;\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL;\n    data = (char *)malloc(100*sizeof(char));\n    // If ppoeidn is responsible for freeing, comment out the next line:\n    // free(data); \n    var1 = 1; \n    ppoeidn(data);\n    data = NULL; // Set data to NULL after potentially freeing in ppoeidn\n}\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-762"
+            ],
+            "filename": "000113624_1.txt",
+            "type": "FP",
+            "cwe": "CWE-415",
+            "actual_cwes": [
+                "CWE-762"
+            ],
+            "predicted_cwes": [
+                "CWE-401",
+                "CWE-415",
+                "CWE-672"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\nnamespace GenNS1\n{\n\n\n\nclass GenClass1\n{\npublic:\n    GenClass1(int * dataCopy);\n    ~GenClass1();\n\nprivate:\n    int * data;\n};\n\n}\n\n\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(int * dataCopy)\n{\n    data = dataCopy;\n    data = (int *)malloc(100*sizeof(int));\n}\n\nGenClass1::~GenClass1()\n{\n    delete [] data;\n}\n}\n\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps()\n{\n    int * data;\n    data = NULL;\n    GenClass1 * var1 = new GenClass1(data);\n    delete var1;\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The provided code has a memory leak and uses mismatched allocation/deallocation methods, leading to potential crashes or undefined behavior.",
+            "Vulnerabilities Found": {
+                "Issue1": "[17, 23-24] - Memory leak: The constructor allocates memory using `malloc`, but the pointer passed to it (`dataCopy`) is never used.  (CWE-401)",
+                "Issue2": "[27-28] - Mismatched allocation and deallocation: The constructor allocates memory with `malloc` but deallocates with `delete[]`. (CWE-762), (CWE-416)"
+            },
+            "Improvement": {
+                "Fix1": "Use the provided pointer or remove the argument. If the intent is to copy data, proper allocation and copying should be implemented within the constructor.",
+                "Fix2": "Use consistent allocation/deallocation methods. Either use `malloc`/`free` or `new`/`delete[]`."
+            },
+            "FinalCode": "#include <iostream>\n#include <cstdlib>\n#include <ctime>\n\nvoid printLine(const char * message) {\n    std::cout << message << std::endl;\n}\n\nnamespace GenNS1\n{\n\nclass GenClass1\n{\npublic:\n    GenClass1(int dataSize);\n    ~GenClass1();\n\nprivate:\n    int * data;\n    int size;\n};\n\n}\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(int dataSize)\n{\n    size = dataSize;\n    data = new int[size]; \n}\n\nGenClass1::~GenClass1()\n{\n    delete[] data;\n}\n}\n\n\nnamespace GenNS1\n{\n\nvoid qazmlps()\n{\n    GenClass1 * var1 = new GenClass1(100);\n    delete var1;\n}\n\n}\n\nusing namespace GenNS1;\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-476"
+            ],
+            "filename": "000001993_1.txt",
+            "type": "TP",
+            "cwe": "CWE-476",
+            "actual_cwes": [
+                "CWE-476"
+            ],
+            "predicted_cwes": [
+                "CWE-476",
+                "CWE-690"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include <iostream>\nusing namespace std;\n\nint main()\n{\n\tint *p = 0, k;\n\tcout << \"Hello World!\" << endl;\n\tk = *p;\n\treturn 0;\n}",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code attempts to dereference a null pointer, which leads to undefined behavior and likely a crash. This is a critical vulnerability.",
+            "Vulnerabilities Found": {
+                "Issue1": "[line 8] - Dereferencing a null pointer (CWE-476)"
+            },
+            "Improvement": {
+                "Fix1": "Check if the pointer is null before dereferencing it.  Allocate memory to the pointer or ensure it points to a valid memory location."
+            },
+            "FinalCode": "#include <iostream>\nusing namespace std;\n\nint main()\n{\n\tint *p = nullptr, k;\n\tcout << \"Hello World!\" << endl;\n\tif (p != nullptr) {\n\t\tk = *p; \n\t} else {\n\t\t// Handle the null pointer case, e.g., allocate memory\n\t\tp = new int;\n\t\t*p = 10; // Initialize with a value\n\t\tk = *p;\n\t\tdelete p; // Free the allocated memory\n\t}\n\treturn 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-476"
+            ],
+            "filename": "000104781_1.txt",
+            "type": "FN",
+            "cwe": "CWE-476",
+            "actual_cwes": [
+                "CWE-476"
+            ],
+            "predicted_cwes": [
+                "CWE-401",
+                "CWE-672"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\nstatic const int STATIC_CONST_TRUE = 1; \nstatic const int STATIC_CONST_FALSE = 0; \n\n\n\nvoid ppoeidn()\n{\n    if(STATIC_CONST_TRUE)\n    {\n        {\n            int *intPointer = NULL;\n            intPointer = (int *)malloc(sizeof(int));\n            *intPointer = 5;\n            printIntLine(*intPointer);\n            if (intPointer != NULL)\n            {\n                *intPointer = 10;\n            }\n            printIntLine(*intPointer);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a memory leak and potential use-after-free vulnerability.",
+            "Vulnerabilities Found": {
+                "Memory Leak": "[14, 19] - Memory allocated using `malloc` is not freed after use. (CWE-401)",
+                "Potential Use-After-Free": "[19] - Dereferencing `intPointer` after it might have been freed could lead to a use-after-free vulnerability. (CWE-416)"
+            },
+            "Improvement": {
+                "Fix1": "Add `free(intPointer)` after its last use inside the `if(STATIC_CONST_TRUE)` block to release the allocated memory.",
+                "Fix2": "Remove the unnecessary reassignment of `*intPointer` after the check for `NULL`. This removes the potential use-after-free if a `free` call was mistakenly placed within the inner `if` block."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\nstatic const int STATIC_CONST_TRUE = 1; \nstatic const int STATIC_CONST_FALSE = 0; \n\n\n\nvoid ppoeidn()\n{\n    if(STATIC_CONST_TRUE)\n    {\n        {\n            int *intPointer = NULL;\n            intPointer = (int *)malloc(sizeof(int));\n            if (intPointer == NULL) {\n                exit(1);\n            }\n            *intPointer = 5;\n            printIntLine(*intPointer);\n            *intPointer = 10; /* Removing unnecessary reassignment and potential use-after-free */\n            printIntLine(*intPointer);\n            free(intPointer);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-401"
+            ],
+            "filename": "000002054_1.txt",
+            "type": "FP",
+            "cwe": "CWE-476",
+            "actual_cwes": [
+                "CWE-401"
+            ],
+            "predicted_cwes": [
+                "CWE-401",
+                "CWE-672",
+                "CWE-476"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a memory leak and potential denial-of-service vulnerability.",
+            "Vulnerabilities Found": {
+                "Issue1": "[7-14] - Potential Memory Leak (CWE-401): The 'p' pointer is allocated memory inside the try block, but if an exception occurs, the allocated memory is not freed.  Further, if the allocation succeeds the memory is also never freed. This results in a memory leak.",
+                "Issue2": "[20-22] - Infinite Loop leading to Denial of Service (CWE-835):  The 'while (i==j)' loop will continue indefinitely if the user inputs equal values for 'i' and 'j'.  This can lead to resource exhaustion (in this specific case, memory exhaustion due to the repeated allocations in 'function()' never being freed) and a denial of service."
+            },
+            "Improvement": {
+                "Fix1": "Ensure that dynamically allocated memory pointed to by 'p' is always freed, even if an exception occurs.  Use a smart pointer or a try-catch-finally block.",
+                "Fix2": "Avoid infinite loops.  Change the loop condition to terminate under predictable circumstances.  In this case either prompt again for input or simply break the loop under a particular condition."
+            },
+            "FinalCode": "#include <iostream>\n#include <memory>\n\nusing namespace std;\n\nvoid function() {\n    std::unique_ptr<short[]> p(nullptr);\n    try {\n        p = std::make_unique<short[]>(1000);\n    } catch (std::exception& e) {\n        std::cerr << \"Error allocating memory: \" << e.what() << std::endl;\n        return; // Exit function if allocation fails\n    }\n\n    std::cout << p.get() << std::endl;  // Print the address\n}\n\nint main() {\n    int i, j;\n    cout << \"Please enter two numbers: \" << endl;\n    cin >> i >> j;\n\n    if (i == j) {  // Execute function only once if i == j \n        function();\n    } \n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-401"
+            ],
+            "filename": "000002054_1.txt",
+            "type": "TP",
+            "cwe": "CWE-401",
+            "actual_cwes": [
+                "CWE-401"
+            ],
+            "predicted_cwes": [
+                "CWE-401",
+                "CWE-672",
+                "CWE-476"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include <iostream>\nusing namespace std;\n\n\nvoid function() {\n\tshort *p = 0;\n\ttry {\n                p = new short [1000];\n            }\n \tcatch (var1&)\n\t{\n\t  cout << \"Error allocating memory.\" << endl;\n\t}\n\n\tcout<<p;\n\treturn;\n}\n\nint main()\n{\n\tint i,j;\n\tcout<<\"Please enter two numbers: \"<<endl;\n\tcin>>i>>j;\n\t\n\twhile (i==j) function();\n\treturn 0;\n}",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has multiple vulnerabilities related to memory management and error handling.",
+            "Vulnerabilities Found": {
+                "Issue1": "[7-14] - Potential memory leak (CWE-401): The code attempts to allocate memory using `new short[1000]` inside a `try-catch` block. If an exception occurs during allocation (e.g., due to insufficient memory), the allocated memory is not deallocated, leading to a memory leak. The `catch` block only prints an error message but does not handle the allocated memory.  Additionally, the type of the exception being caught (`var1&`) isn't the standard `std::bad_alloc` which should be used when catching memory allocation exceptions. Lastly, there's no `delete[] p;` after using it, even in a successful allocation scenario.",
+                "Issue2": "[16] - Unintentional printing of memory address (CWE-457): The code prints the value of the pointer `p` using `cout << p;`. This is not inherently a vulnerability but might unintentionally expose memory addresses, which could be leveraged by an attacker under certain circumstances.",
+                "Issue3": "[23-25] - Infinite loop in specific scenarios (CWE-835): The `while (i == j)` loop calls the `function()` repeatedly if `i` and `j` are equal. This could lead to excessive memory consumption or even a crash, depending on how the `function()` handles memory allocation, although a memory exhaustion exception would prevent an infinite loop in this specific case."
+            },
+            "Improvement": {
+                "Fix1": "Use a smart pointer like `std::unique_ptr` to manage the dynamically allocated memory. This will automatically deallocate the memory when the pointer goes out of scope, even if an exception occurs.  Also use `std::bad_alloc` for catching allocation failures.",
+                "Fix2": "Remove the line `cout << p;` or replace it with a meaningful output if the intention was not to print the memory address.  Consider printing a diagnostic message indicating successful or failed allocation.",
+                "Fix3": "Re-evaluate the logic of the `while (i == j)` loop.  If it's intended to run until the user provides different values, consider prompting the user for new input inside the loop or adding an exit condition."
+            },
+            "FinalCode": "#include <iostream>\n#include <memory>\nusing namespace std;\n\nvoid function() {\n    std::unique_ptr<short[]> p = nullptr;\n    try {\n        p = std::make_unique<short[]>(1000);\n        std::cout << \"Memory allocated successfully.\" << std::endl;\n    } catch (const std::bad_alloc& e) {\n        std::cerr << \"Error allocating memory: \" << e.what() << std::endl;\n        return; // Or handle the error appropriately\n    }\n\n    // Use p here...\n}\n\nint main() {\n    int i, j;\n    cout << \"Please enter two numbers: \" << endl;\n    cin >> i >> j;\n\n    while (i == j) {\n        function();\n        cout << \"Please enter two different numbers: \" << endl;\n        cin >> i >> j;\n    }\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-401"
+            ],
+            "filename": "000099963_1.txt",
+            "type": "FN",
+            "cwe": "CWE-401",
+            "actual_cwes": [
+                "CWE-401"
+            ],
+            "predicted_cwes": [
+                "CWE-416"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    struct _twoIntsStruct * data;\n    data = NULL;\n    if(globalReturnsTrueOrFalse())\n    {\n        data = new struct _twoIntsStruct[100];\n        data[0].intOne = 0;\n        data[0].intTwo = 0;\n        printStructLine((twoIntsStruct *)&data[0]);\n    }\n    else\n    {\n        struct _twoIntsStruct var2[100];\n        data = var2;\n        data[0].intOne = 0;\n        data[0].intTwo = 0;\n        printStructLine((twoIntsStruct *)&data[0]);\n    }\n    if(globalReturnsTrueOrFalse())\n    {\n        ; \n    }\n    else\n    {\n        delete[] data;\n    }\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a conditional memory leak and a double-free vulnerability.  Depending on the return values of `globalReturnsTrueOrFalse()`, the code might leak memory or attempt to free stack memory. Most critically, if the first call returns true (memory allocated with `new`) and the second call returns false, a double-free will occur when `delete[] data` is called on memory that was already freed at the end of the `else` block due to being a stack variable.",
+            "Vulnerabilities Found": {
+                "ConditionalMemoryLeak": "[lines 22-30, 32-37] - Memory allocated with 'new' in one branch of the if statement is not freed in the other branch if the second 'if' condition is true, leading to a memory leak. (CWE-401)",
+                "DoubleFree": "[lines 22-30, 32-37] -  The code can attempt to free stack memory when the first if condition is false, resulting in undefined behavior.  More severely, if the first condition is true and the second is false, the same memory will be freed twice: once implicitly at the end of the 'else' block (stack variable goes out of scope) and then explicitly by 'delete[] data' . This is a double-free. (CWE-415)"
+            },
+            "Improvement": {
+                "FixMemoryLeak": "Ensure that memory allocated with 'new' is always deallocated with 'delete[]', regardless of the execution path. Consolidate the conditional deallocation into a single block after all conditional logic.",
+                "PreventDoubleFree": "Never attempt to `delete[]` memory that was not allocated with `new[]`. In this case, the function should only call `delete[] data` if and only if the memory was allocated within the first `if` condition."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\nnamespace var1\n{\n\nvoid ppoeidn()\n{\n    struct _twoIntsStruct * data = NULL;\n    bool allocatedOnHeap = false;\n\n    if(globalReturnsTrueOrFalse())\n    {\n        data = new struct _twoIntsStruct[100];\n        allocatedOnHeap = true;\n    }\n    else\n    {\n        data = new struct _twoIntsStruct[100]; // Allocate on heap even in this branch\n    }\n\n    data[0].intOne = 0;\n    data[0].intTwo = 0;\n    printStructLine((twoIntsStruct *)&data[0]);\n\n    if (allocatedOnHeap) {\n        delete[] data;\n    } else {\n        delete[] data; // Still delete because now it's always allocated on the heap\n    }\n}\n\n}\n\nusing namespace var1;\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-415"
+            ],
+            "filename": "000101434_1.txt",
+            "type": "FP",
+            "cwe": "CWE-401",
+            "actual_cwes": [
+                "CWE-415"
+            ],
+            "predicted_cwes": [
+                "CWE-416",
+                "CWE-401"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\n#include <wchar.h>\n\nnamespace GenNS1\n{\n\n\n\nclass GenClass1\n{\npublic:\n    GenClass1(long * dataCopy);\n    ~GenClass1();\n\nprivate:\n    long * data;\n};\n\n}\n\n\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(long * dataCopy)\n{\n    data = dataCopy;\n    data = (long *)malloc(100*sizeof(long));\n    free(data);\n}\n\nGenClass1::~GenClass1()\n{\n    free(data);\n}\n}\n\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps()\n{\n    long * data;\n    data = NULL;\n    GenClass1 * var1 = new GenClass1(data);\n    delete var1;\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a double-free vulnerability and a memory leak.",
+            "Vulnerabilities Found": {
+                "Double Free": "[line 34, 40] - The `data` member is freed in both the constructor and destructor of `GenClass1`. This leads to a double-free vulnerability when a `GenClass1` object is deleted. (CWE-415)",
+                "Memory Leak": "[line 33] - Memory allocated inside the constructor using `malloc` is immediately freed. However, the constructor then allocates new memory and assigns it to `data`.  The original `dataCopy` passed as an argument is never used and becomes a memory leak if it was dynamically allocated. (CWE-401)"
+            },
+            "Improvement": {
+                "Fix Double Free": "Remove the `free(data)` call from the constructor. The destructor should handle freeing the memory allocated for `data`.",
+                "Fix Memory Leak": "1. Either use the passed `dataCopy` to initialize the `data` member or 2. if the class is intended to manage its own memory, remove the `dataCopy` parameter and only allocate within the constructor."
+            },
+            "FinalCode": "#include <wchar.h>\n#include <cstdlib> // Include for malloc and free\n\nnamespace GenNS1\n{\n\nclass GenClass1\n{\npublic:\n    GenClass1(long * dataCopy);\n    ~GenClass1();\n\nprivate:\n    long * data;\n};\n\n}\n\nnamespace GenNS1\n{\nGenClass1::GenClass1(long * dataCopy) \n{\n    //Option 1: Use dataCopy. Make sure dataCopy is valid and allocated correctly by the caller.\n    //data = dataCopy;\n\n    //Option 2: Manage memory internally\n    data = (long *)malloc(100 * sizeof(long));\n    if (data == NULL) {\n      // Handle allocation failure\n      exit(1); //Or throw an exception\n    }\n\n}\n\nGenClass1::~GenClass1()\n{\n    free(data);\n    data = nullptr; //Good practice to set to null after freeing\n}\n}\n\n\nnamespace GenNS1\n{\n\nvoid qazmlps()\n{\n    long * data = nullptr; // Initialize to nullptr\n    GenClass1 * var1 = new GenClass1(data);\n    delete var1;\n}\n\n}\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-775"
+            ],
+            "filename": "000116815_1.txt",
+            "type": "TP",
+            "cwe": "CWE-775",
+            "actual_cwes": [
+                "CWE-775"
+            ],
+            "predicted_cwes": [
+                "CWE-775"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        ; \n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a potential resource leak (file descriptor) and uses a hardcoded filename, which could lead to various security issues depending on the deployment environment.",
+            "Vulnerabilities Found": {
+                "Resource Leak": "[line 11, 13, 17] - The file opened with `fopen` is not closed, leading to a resource leak. (CWE-772)",
+                "Hardcoded File Name": "[line 11] - The filename used in `fopen` is hardcoded, which might lead to access issues and unexpected behavior across different systems. (CWE-73)"
+            },
+            "Improvement": {
+                "Fix Resource Leak": "Close the file using `fclose(data)` after it's no longer needed.  Ensure this happens even if GLOBAL_CONST_FIVE is not 5.",
+                "Fix Hardcoded Filename": "Avoid hardcoding the filename.  Either allow the user to specify it as a command-line argument or use a more appropriate, configurable path."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n\nvoid ppoeidn(const char *filename)\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(filename, \"w+\");\n    if (data == NULL) {\n        printLine(\"Error opening file\");\n        return;\n    }\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        ; \n    }\n    fclose(data);\n}\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    if (argc != 2) {\n        printLine(\"Usage: <program> <filename>\");\n        return 1;\n    }\n\n    printLine(\"Calling ...\");\n    ppoeidn(argv[1]);\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-775"
+            ],
+            "filename": "000116803_1.txt",
+            "type": "FN",
+            "cwe": "CWE-775",
+            "actual_cwes": [
+                "CWE-775"
+            ],
+            "predicted_cwes": [
+                "CWE-774"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    ; \n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code opens a file with a hardcoded filename and the \"w+\" mode. This poses a few security risks, primarily related to file system access and potential denial-of-service.  The filename itself is problematic and likely an error, and \"w+\" mode truncates the file if it exists.",
+            "Vulnerabilities Found": {
+                "Issue1": "[13, 15] - Insecure file I/O due to hardcoded filename.  The filename \", \" is unusual and likely incorrect, making it difficult to predict the file location and potentially leading to unexpected behavior or errors. (CWE-73)",
+                "Issue2": "[15] - Improper file access with \"w+\" mode.  If a file named \", \" unexpectedly exists, its contents will be erased, possibly causing data loss.  If the file cannot be created (e.g., due to permissions), the program does not handle the error. This can lead to undefined behavior. (CWE-377, CWE-732)"
+            },
+            "Improvement": {
+                "Fix1": "Use a proper filename obtained from user input or configuration and sanitize the input to prevent path traversal attacks. Handle potential errors during file opening.",
+                "Fix2": "Handle file opening errors. Check the return value of `fopen` to ensure the file was opened successfully. If `fopen` returns `NULL`, print an error message and exit gracefully. Change the file mode from \"w+\" to \"a+\" to append to a file if it exists or create a new file if it does not exist. This avoids accidental data loss."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n#include <iostream>\n#include <string>\n\nvoid ppoeidn(const std::string& filename)\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(filename.c_str(), \"a+\");\n    if (data == NULL) {\n        std::cerr << \"Error opening file: \" << filename << std::endl;\n        return;\n    }\n\n    // ... perform operations on the file ...\n\n    fclose(data);\n}\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    std::string filename;\n\n    if (argc > 1) {\n        filename = argv[1]; \n    } else {\n        filename = \"output.txt\"; \n    }\n\n    printLine(\"Calling ...\");\n    ppoeidn(filename);\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-773"
+            ],
+            "filename": "000116679_1.txt",
+            "type": "FP",
+            "cwe": "CWE-775",
+            "actual_cwes": [
+                "CWE-773"
+            ],
+            "predicted_cwes": [
+                "CWE-775"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    {\n        FILE * dataCopy = data;\n        FILE * data = dataCopy;\n        data = fopen(\", \"w+\");\n        if (data != NULL)\n        {\n            fclose(data);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a resource leak and potential denial-of-service vulnerability due to repeatedly opening a file named \",\" without proper error handling and closing the first opened file descriptor.",
+            "Vulnerabilities Found": {
+                "Resource Leak": "[lines 11, 16] - The code opens a file using `fopen` but doesn't close it in all execution paths.  The initial `fopen` at line 11 leaks the file descriptor if the subsequent `fopen` at line 16 is successful. (CWE-404)",
+                "Denial of Service (DoS)": "[lines 11, 16] - The code repeatedly opens a file named \",\" for writing.  This can lead to a denial of service because the file system may eventually run out of available file descriptors or space if the file is not closed properly. The repeated opening of the same file within the nested scope exacerbates this issue. (CWE-773)"
+            },
+            "Improvement": {
+                "Fix Resource Leak": "Close the initially opened file before opening it again. Ensure all `fopen` calls have corresponding `fclose` calls in every possible execution path. Ensure that there is only one `fopen` outside the nested block. Rename the `data` variable inside the nested block, because shadowing can make it harder to read.",
+                "Fix Denial of Service": "Avoid repeatedly opening the same file unnecessarily, check return values and handle error conditions. Use more meaningful filenames instead of \",\".  If repeated operations are necessary, close and reopen or flush the file periodically to ensure proper functionality."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\"data.txt\", \"w+\");  /* Use a proper file name */\n    if (data == NULL) {\n        printLine(\"Error opening file\");\n        return;\n    }\n\n    {\n        FILE * dataCopy = data;\n        FILE * data2 = dataCopy; /* Rename shadowed variable */\n        data2 = fopen(\"data2.txt\", \"w+\"); /* Use different name in nested block if needed */\n        if (data2 != NULL)\n        {\n            fclose(data2);\n        }\n    }\n\n    if (data != NULL)\n    {\n        fclose(data);\n    }\n}\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-762"
+            ],
+            "filename": "000113224_1.txt",
+            "type": "TP",
+            "cwe": "CWE-762",
+            "actual_cwes": [
+                "CWE-762"
+            ],
+            "predicted_cwes": [
+                "CWE-416",
+                "CWE-762",
+                "CWE-672"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\nnamespace GenNS1\n{\n\n\n\nvoid qazmlps(char * data);\n\nvoid ppoeidn(char * data)\n{\n    qazmlps(data);\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid func7(char * data);\n\nvoid qazmlps(char * data)\n{\n    func7(data);\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid func7(char * data)\n{\n    delete [] data;\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(char * data);\n\nvoid ppoeidn0()\n{\n    char * data;\n    data = NULL;\n    data = NULL;\n    data = (char *)realloc(data, 100*sizeof(char));\n    ppoeidn(data);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn0();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a double free vulnerability. Memory allocated with `realloc` is freed in `func7`, which is called by `qazmlps` and `ppoeidn`.  However, if `realloc` fails (e.g., due to memory exhaustion), it returns NULL, but the subsequent call to `ppoeidn` still attempts to free this NULL pointer, potentially leading to a crash or undefined behavior. Also, after fixing the memory allocation issue, a potential memory leak still existed in `ppoeidn0` if the `realloc` call failed. This is because `data` could be pointing to previously allocated memory that would then become unreachable after `realloc` fails and overwrites the pointer.",
+            "Vulnerabilities Found": {
+                "Issue1": "[47, 58] - Double free or corruption (access after free) because data can be NULL (CWE-415), [66] - potential memory leak if realloc fails (CWE-401)",
+                "Issue2": "[57] - Redundant NULL assignment (CWE-415)"
+            },
+            "Improvement": {
+                "Fix1": "Check the return value of `realloc`. If it's NULL, handle the error appropriately and do not attempt to `delete` `data` unless it actually points to previously allocated memory.",
+                "Fix2": "Remove the redundant `data = NULL;` assignment."
+            },
+            "FinalCode": "#include <cstdlib>\n#include <ctime>\n#include <iostream>\n\nnamespace GenNS1 {\n\nvoid qazmlps(char* data);\n\nvoid ppoeidn(char* data) {\n    if (data != nullptr) {\n        qazmlps(data);\n    }\n}\n\nvoid func7(char* data) {\n    delete[] data;\n}\n\nvoid qazmlps(char* data) {\n    func7(data);\n}\n\nvoid ppoeidn(char* data);\n\nvoid ppoeidn0() {\n    char* data = nullptr;  // Initialize to nullptr\n    data = (char*)realloc(data, 100 * sizeof(char));\n    if (data == nullptr) {\n        std::cerr << \"Memory allocation failed!\\n\";\n        // Handle error, potentially exit\n        return;  // or throw an exception\n    }\n    ppoeidn(data);\n}\n\n}  // namespace GenNS1\n\nusing namespace GenNS1;\n\nvoid printLine(const char* message) {\n    std::cout << message << std::endl;\n}\n\nint main(int argc, char* argv[]) {\n    srand((unsigned)time(NULL));\n\n    printLine(\"Calling ...\");\n    ppoeidn0();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-762"
+            ],
+            "filename": "000113116_1.txt",
+            "type": "FN",
+            "cwe": "CWE-762",
+            "actual_cwes": [
+                "CWE-762"
+            ],
+            "predicted_cwes": [
+                "CWE-416"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\nnamespace GenNS1\n{\n\n\n\nextern int var1;\n\nvoid ppoeidn(char * data)\n{\n    if(var1)\n    {\n        delete [] data;\n    }\n}\n\n} \n\nnamespace GenNS1\n{\n\n\n\nint var1 = 0;\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL;\n    data = (char *)calloc(100, sizeof(char));\n    var1 = 1; \n    ppoeidn(data);\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a double free vulnerability because the 'data' pointer is freed in 'ppoeidn' when 'var1' is 1, and 'var1' is always set to 1 before calling 'ppoeidn'. This will lead to a crash or potentially exploitable behavior.",
+            "Vulnerabilities Found": {
+                "Double Free": "[lines 14, 29, 35] - The 'data' pointer is freed in 'ppoeidn' but the same pointer might be inadvertently freed again elsewhere in the code or upon exiting the program if allocated dynamically. (CWE-415)"
+            },
+            "Improvement": {
+                "Fix1": "Ensure that memory allocated with 'calloc' is freed only once. In this specific case, remove the call to delete [] data and let the caller handle the allocated memory. Ensure a single, deterministic location for freeing dynamically allocated memory to avoid such errors."
+            },
+            "FinalCode": "#include <iostream>\n#include <cstdlib>\n#include <ctime>\n\n// Placeholder for printLine function (assuming it exists)\nvoid printLine(const char * message) {\n    std::cout << message << std::endl;\n}\n\nnamespace GenNS1\n{\n\n\nextern int var1;\n\nvoid ppoeidn(char * data)\n{\n    if(var1)\n    {\n        // Removed: delete [] data; \n    }\n}\n\n}\n\nnamespace GenNS1\n{\n\n\nint var1 = 0;\n\nvoid ppoeidn(char * data);\n\nvoid uytvbdk()\n{\n    char * data;\n    data = NULL;\n    data = (char *)calloc(100, sizeof(char));\n    var1 = 1; \n    ppoeidn(data);\n    free(data);  // Free the memory here after using it\n}\n\n} \n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    uytvbdk();\n    printLine(\"Finished\");\n    return 0;\n}\n"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-415"
+            ],
+            "filename": "000101371_1.txt",
+            "type": "FP",
+            "cwe": "CWE-762",
+            "actual_cwes": [
+                "CWE-415"
+            ],
+            "predicted_cwes": [
+                "CWE-416",
+                "CWE-664",
+                "CWE-762"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\n#include <wchar.h>\n\n\n\nvoid qazmlps(int * data);\n\nvoid ppoeidn(int * data)\n{\n    qazmlps(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid func7(int * data);\n\nvoid qazmlps(int * data)\n{\n    func7(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn0(int * data);\n\nvoid func7(int * data)\n{\n    ppoeidn0(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn0(int * data)\n{\n    free(data);\n}\n\n\n\n#include <wchar.h>\n\n\n\nvoid ppoeidn(int * data);\n\nvoid ppoeidn3()\n{\n    int * data;\n    data = NULL;\n    data = (int *)malloc(100*sizeof(int));\n    free(data);\n    ppoeidn(data);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn3();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code contains a use-after-free vulnerability. In the `ppoeidn3` function, memory is allocated for `data`, freed, and then passed to `ppoeidn`.  This leads to a crash or potentially exploitable behavior when `ppoeidn` (through its chain of calls) attempts to access the freed memory.",
+            "Vulnerabilities Found": {
+                "Use After Free": "[lines 54-58] - The `data` pointer is freed, and then used in `ppoeidn`. (CWE-416)"
+            },
+            "Improvement": {
+                "Fix1": "Remove the call to `free(data)` before the call to `ppoeidn(data)` in the `ppoeidn3` function. The correct place to free the memory is *after* its last use. Alternatively, do not free the memory at all if the function `ppoeidn` is intended to take ownership. Clarify which function has the responsibility to release the allocated memory to ensure only one function calls `free`. It may be better if the responsibility to free stays with `ppoeidn` and the initial `free(data)` is removed."
+            },
+            "FinalCode": "#include <wchar.h>\n\n\nvoid qazmlps(int * data);\n\nvoid ppoeidn(int * data)\n{\n    qazmlps(data);\n}\n\n\n#include <wchar.h>\n\n\nvoid func7(int * data);\n\nvoid qazmlps(int * data)\n{\n    func7(data);\n}\n\n\n#include <wchar.h>\n\n\nvoid ppoeidn0(int * data);\n\nvoid func7(int * data)\n{\n    ppoeidn0(data);\n}\n\n\n#include <wchar.h>\n\n\nvoid ppoeidn0(int * data)\n{\n    free(data);\n}\n\n\n#include <wchar.h>\n\n\nvoid ppoeidn(int * data);\n\nvoid ppoeidn3()\n{\n    int * data;\n    data = NULL;\n    data = (int *)malloc(100*sizeof(int));\n    ppoeidn(data);\n}\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn3();\n    printLine(\"Finished\");\n    return 0;\n}\n"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-789"
+            ],
+            "filename": "000117257_1.txt",
+            "type": "TP",
+            "cwe": "CWE-789",
+            "actual_cwes": [
+                "CWE-789"
+            ],
+            "predicted_cwes": [
+                "CWE-789",
+                "CWE-824",
+                "CWE-78",
+                "CWE-664"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(size_t &data)\n{\n    {\n#ifdef _WIN32\n        WSADATA wsaData;\n        int wsaDataInit = 0;\n#endif\n        int recvResult;\n        struct sockaddr_in service;\n        SOCKET connectSocket = INVALID_SOCKET;\n        char inputBuffer[CHAR_ARRAY_SIZE];\n        do\n        {\n#ifdef _WIN32\n            if (WSAStartup(MAKEWORD(2,2), &wsaData) != NO_ERROR)\n            {\n                break;\n            }\n            wsaDataInit = 1;\n#endif\n            connectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);\n            if (connectSocket == INVALID_SOCKET)\n            {\n                break;\n            }\n            memset(&service, 0, sizeof(service));\n            service.sin_family = AF_INET;\n            service.sin_addr.s_addr = inet_addr(IP_ADDRESS);\n            service.sin_port = htons(TCP_PORT);\n            if (connect(connectSocket, (struct sockaddr*)&service, sizeof(service)) == SOCKET_ERROR)\n            {\n                break;\n            }\n            recvResult = recv(connectSocket, inputBuffer, CHAR_ARRAY_SIZE - 1, 0);\n            if (recvResult == SOCKET_ERROR || recvResult == 0)\n            {\n                break;\n            }\n            inputBuffer[recvResult] = '\\0';\n            data = strtoul(inputBuffer, NULL, 0);\n        }\n        while (0);\n        if (connectSocket != INVALID_SOCKET)\n        {\n            CLOSE_SOCKET(connectSocket);\n        }\n#ifdef _WIN32\n        if (wsaDataInit)\n        {\n            WSACleanup();\n        }\n#endif\n    }\n}\n\n} \n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#define HELLO_STRING L\"hello\"\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(size_t &data);\n\nvoid qazmlps()\n{\n    size_t data;\n    data = 0;\n    ppoeidn(data);\n    {\n        wchar_t * myString;\n        if (data > wcslen(HELLO_STRING))\n        {\n            myString = (wchar_t *)malloc(data*sizeof(wchar_t));\n            wcscpy(myString, HELLO_STRING);\n            printWLine(myString);\n            free(myString);\n        }\n        else\n        {\n            printLine(\"Input is less than the length of the source string\");\n        }\n    }\n}\n\n} \n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a potential buffer overflow vulnerability due to improper handling of the size argument received from the network. This size argument is used to allocate memory, and if it exceeds the expected range, it can lead to memory corruption.",
+            "Vulnerabilities Found": {
+                "Issue1": "[Line 86, 97-101] - Buffer Overflow (CWE-122): The code receives a size argument ('data') from a network connection and uses it to allocate memory for a wide character string.  If the server sends a malicious value for data (i.e., larger than intended), `malloc` can allocate insufficient memory. Subsequent `wcscpy` operation could overflow the allocated buffer, writing beyond its bounds.  Since 'data' is also a `size_t` it can't be checked for negative values, exacerbating the issue. (CWE-120, CWE-805)",
+                "Issue2": "[Line 78] - Integer Overflow (CWE-190):  The `strtoul` function is used to convert the received data from the network to a `size_t`. However, if the input string represents a number larger than what `size_t` can hold, integer overflow can occur leading to undefined behaviour, including a wrap-around to a smaller than expected value. This smaller value used with `malloc` can then create a buffer too small for the data meant to be copied to it by `wcscpy`, resulting in a buffer overflow. (CWE-190)"
+            },
+            "Improvement": {
+                "Fix1": "Implement bounds checking on the 'data' variable before using it for memory allocation. Ensure that the allocated size does not exceed a reasonable maximum value. Limit the input received from recv to mitigate the risk of integer overflow (CWE-120, CWE-787, CWE-805, CWE-122). Sanitize input (CWE-20).",
+                "Fix2": "Instead of using `strtoul`, use `strtoull` for better handling of potentially large input. Validate if the conversion was successful and the input is within reasonable bounds."
+            },
+            "FinalCode": "#ifndef _WIN32\n#include <wchar.h>\n#include <limits>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define MAX_INPUT_SIZE 1024  // Define a maximum input size\n#define MAX_ALLOC_SIZE (1024 * sizeof(wchar_t)) // Define a reasonable maximum allocation size\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(size_t &data)\n{\n    {\n#ifdef _WIN32\n        WSADATA wsaData;\n        int wsaDataInit = 0;\n#endif\n        int recvResult;\n        struct sockaddr_in service;\n        SOCKET connectSocket = INVALID_SOCKET;\n        char inputBuffer[MAX_INPUT_SIZE];\n        do\n        {\n#ifdef _WIN32\n            if (WSAStartup(MAKEWORD(2,2), &wsaData) != NO_ERROR)\n            {\n                break;\n            }\n            wsaDataInit = 1;\n#endif\n            connectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);\n            if (connectSocket == INVALID_SOCKET)\n            {\n                break;\n            }\n            memset(&service, 0, sizeof(service));\n            service.sin_family = AF_INET;\n            service.sin_addr.s_addr = inet_addr(IP_ADDRESS);\n            service.sin_port = htons(TCP_PORT);\n            if (connect(connectSocket, (struct sockaddr*)&service, sizeof(service)) == SOCKET_ERROR)\n            {\n                break;\n            }\n            recvResult = recv(connectSocket, inputBuffer, MAX_INPUT_SIZE - 1, 0);\n            if (recvResult == SOCKET_ERROR || recvResult == 0)\n            {\n                break;\n            }\n            inputBuffer[recvResult] = '\\0';\n            unsigned long long ull_data = strtoull(inputBuffer, NULL, 0);\n            if (ull_data > std::numeric_limits<size_t>::max()) {\n                 data = 0; // Or handle the error appropriately\n                 break;\n            }\n            data = static_cast<size_t>(ull_data);\n\n        }\n        while (0);\n        if (connectSocket != INVALID_SOCKET)\n        {\n            CLOSE_SOCKET(connectSocket);\n        }\n#ifdef _WIN32\n        if (wsaDataInit)\n        {\n            WSACleanup();\n        }\n#endif\n    }\n}\n\n}\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#define HELLO_STRING L\"hello\"\n\nnamespace GenNS1\n{\n\n\n\nvoid ppoeidn(size_t &data);\n\nvoid qazmlps()\n{\n    size_t data;\n    data = 0;\n    ppoeidn(data);\n    {\n        wchar_t * myString;\n        size_t safe_size = std::min(data, MAX_ALLOC_SIZE/sizeof(wchar_t)-1);\n\n        if (safe_size > 0) {\n            myString = (wchar_t *)malloc((safe_size +1) * sizeof(wchar_t)); //Allocate for string + null terminator.\n            if (myString == NULL) { \n                printLine(\"Memory allocation failed\");\n                return; //Handle allocation failure\n            }\n            wcsncpy(myString, HELLO_STRING, safe_size );  // Prevent write beyond buffer\n            myString[safe_size] = L'\\0'; // Ensure null-termination\n            printWLine(myString);\n            free(myString);\n        } else {\n            printLine(\"Input is invalid or less than the length of the source string\");\n        }\n    }\n}\n\n}\n\n\n\nusing namespace GenNS1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-789"
+            ],
+            "filename": "000117016_1.txt",
+            "type": "FN",
+            "cwe": "CWE-789",
+            "actual_cwes": [
+                "CWE-789"
+            ],
+            "predicted_cwes": [
+                "CWE-78",
+                "CWE-120",
+                "CWE-835"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\n#define HELLO_STRING \"hello\"\n\n\n\nsize_t ppoeidn(size_t data)\n{\n    {\n#ifdef _WIN32\n        WSADATA wsaData;\n        int wsaDataInit = 0;\n#endif\n        int recvResult;\n        struct sockaddr_in service;\n        SOCKET connectSocket = INVALID_SOCKET;\n        char inputBuffer[CHAR_ARRAY_SIZE];\n        do\n        {\n#ifdef _WIN32\n            if (WSAStartup(MAKEWORD(2,2), &wsaData) != NO_ERROR)\n            {\n                break;\n            }\n            wsaDataInit = 1;\n#endif\n            connectSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);\n            if (connectSocket == INVALID_SOCKET)\n            {\n                break;\n            }\n            memset(&service, 0, sizeof(service));\n            service.sin_family = AF_INET;\n            service.sin_addr.s_addr = inet_addr(IP_ADDRESS);\n            service.sin_port = htons(TCP_PORT);\n            if (connect(connectSocket, (struct sockaddr*)&service, sizeof(service)) == SOCKET_ERROR)\n            {\n                break;\n            }\n            recvResult = recv(connectSocket, inputBuffer, CHAR_ARRAY_SIZE - 1, 0);\n            if (recvResult == SOCKET_ERROR || recvResult == 0)\n            {\n                break;\n            }\n            inputBuffer[recvResult] = '\\0';\n            data = strtoul(inputBuffer, NULL, 0);\n        }\n        while (0);\n        if (connectSocket != INVALID_SOCKET)\n        {\n            CLOSE_SOCKET(connectSocket);\n        }\n#ifdef _WIN32\n        if (wsaDataInit)\n        {\n            WSACleanup();\n        }\n#endif\n    }\n    return data;\n}\n\n\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define CHAR_ARRAY_SIZE (3 * sizeof(data) + 2)\n\n#define HELLO_STRING \"hello\"\n\n\n\nsize_t ppoeidn(size_t data);\n\nvoid qazmlps()\n{\n    size_t data;\n    data = 0;\n    data = ppoeidn(data);\n    {\n        char * myString;\n        if (data > strlen(HELLO_STRING))\n        {\n            myString = (char *)malloc(data*sizeof(char));\n            strcpy(myString, HELLO_STRING);\n            printLine(myString);\n            free(myString);\n        }\n        else\n        {\n            printLine(\"Input is less than the length of the source string\");\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a potential buffer overflow vulnerability in the `qazmlps` function. The `ppoeidn` function receives data from a network socket and uses it to allocate memory for `myString`. If the received data is larger than the expected size, a buffer overflow can occur during the `strcpy` operation.",
+            "Vulnerabilities Found": {
+                "Buffer Overflow": "[127-131] - The `data` variable, received from the network, is used to allocate memory.  If the network input is excessively large, `malloc` can allocate insufficient memory leading to a buffer overflow when `strcpy` copies `HELLO_STRING` into `myString` (CWE-120)"
+            },
+            "Improvement": {
+                "Fix1": "Implement proper input validation to ensure that `data` does not exceed the maximum allowed size.  Use a safe string copy function like `strncpy` with a size limit to prevent potential overflows. Replace `malloc` with safer dynamic memory allocation as necessary. Ensure data received from the network is validated and sanitized before being used in memory allocation.  Add a check to verify return value of `malloc`. Consider statically allocating a sufficiently large buffer if the maximum size is known at compile time."
+            },
+            "FinalCode": "#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#ifdef _WIN32\n#include <winsock2.h>\n#include <windows.h>\n#include <direct.h>\n#pragma comment(lib, \"ws2_32\") \n#define CLOSE_SOCKET closesocket\n#else \n#include <sys/types.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n#define INVALID_SOCKET -1\n#define SOCKET_ERROR -1\n#define CLOSE_SOCKET close\n#define SOCKET int\n#endif\n\n#define TCP_PORT 27015\n#define IP_ADDRESS \"127.0.0.1\"\n#define MAX_INPUT_SIZE 256  // Define a maximum input size\n#define HELLO_STRING \"hello\"\n\nsize_t ppoeidn(size_t data);\n\nvoid qazmlps()\n{\n    size_t data = 0;\n    data = ppoeidn(data);\n\n    char myString[MAX_INPUT_SIZE]; // Statically allocated buffer\n\n    if (data < MAX_INPUT_SIZE) { // Check against maximum size\n        strncpy(myString, HELLO_STRING, data); // Safe string copy\n        myString[data -1 ] = '\\0'; // Null-terminate\n        printLine(myString);\n    } else {\n        printLine(\"Input is too large or less than the length of the source string\");\n    }\n}\n\n// ... (rest of the code remains the same)\n"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ],
+            "filename": "000082149_1.txt",
+            "type": "FP",
+            "cwe": "CWE-789",
+            "actual_cwes": [
+                "CWE-190"
+            ],
+            "predicted_cwes": [
+                "CWE-789",
+                "CWE-676"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "\n\ntypedef struct var1\n{\n    char structFirst;\n} var2;\n\n\n\nvoid ppoeidn(var2 myStruct)\n{\n    char data = myStruct.structFirst;\n    {\n        char result = data + 1;\n        printHexCharLine(result);\n    }\n}\n\n\n\ntypedef struct var1\n{\n    char structFirst;\n} var2;\n\n\n\nvoid ppoeidn(var2 myStruct);\n\nvoid qazmlps()\n{\n    char data;\n    var2 myStruct;\n    data = ' ';\n    fscanf (stdin, \"%c\", &data);\n    myStruct.structFirst = data;\n    ppoeidn(myStruct);\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a format string vulnerability in the fscanf function and an integer overflow vulnerability in the character addition.",
+            "Vulnerabilities Found": {
+                "Format String Vulnerability": "[29] - The fscanf function uses %c without specifying a field width, which can lead to a buffer overflow if the input is larger than expected.  (CWE-125)",
+                "Integer Overflow": "[12] - Adding 1 to a character can cause an integer overflow if the character's value is already at its maximum. (CWE-190)"
+            },
+            "Improvement": {
+                "Fix1": "Specify a field width in the format string of fscanf to prevent buffer overflow. Use a temporary buffer and then copy the character to the structure after bounds checking.",
+                "Fix2": "Check for potential overflow before adding 1 to the character. Provide appropriate error handling in case an overflow is detected or use a larger integer type to accommodate the result."
+            },
+            "FinalCode": "#include <iostream>\n#include <cstdio>\n#include <cstdlib>\n#include <limits>\n#include <ctime>\n\nvoid printLine(const char * message) {\n    std::cout << message << std::endl;\n}\n\nvoid printHexCharLine(char charToPrint) {\n    printf(\"0x%X\\n\", charToPrint);\n}\n\ntypedef struct var1\n{\n    char structFirst;\n} var2;\n\n\n\nvoid ppoeidn(var2 myStruct)\n{\n    char data = myStruct.structFirst;\n    {\n        if (data == std::numeric_limits<char>::max()) {\n            printLine(\"Error: Potential Integer Overflow\");\n            return;\n        }\n        char result = data + 1;\n        printHexCharLine(result);\n    }\n}\n\n\n\ntypedef struct var1\n{\n    char structFirst;\n} var2;\n\n\n\nvoid ppoeidn(var2 myStruct);\n\nvoid qazmlps()\n{\n    char data;\n    var2 myStruct;\n    char inputBuffer[2]; // Temporary buffer to prevent overflow\n\n    if (fscanf(stdin, \"%1s\", inputBuffer) == 1) { \n        data = inputBuffer[0];\n        myStruct.structFirst = data;\n        ppoeidn(myStruct);\n    } else {\n        printLine(\"Error reading input.\");\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand((unsigned)time(NULL));\n\n    printLine(\"Calling ...\");\n    qazmlps();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-773"
+            ],
+            "filename": "000116659_1.txt",
+            "type": "FN",
+            "cwe": "CWE-773",
+            "actual_cwes": [
+                "CWE-773"
+            ],
+            "predicted_cwes": [
+                "CWE-774"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    data = fopen(\", \"w+\");\n    data = fopen(\", \"w+\");\n    if (data != NULL)\n    {\n        fclose(data);\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a vulnerability related to improper file handling. It attempts to open a file with a comma as the filename, which can lead to unexpected behavior and potential security risks depending on the underlying operating system and how it handles invalid filenames. Additionally, it opens the same invalid file twice and only checks for a NULL pointer after the second fopen call, potentially leaving a file handle open if the first fopen fails.  It also uses the \"w+\" mode which can create and/or overwrite files, posing security risks if an attacker can influence the filename.",
+            "Vulnerabilities Found": {
+                "Issue1": "[12, 13] - Use of invalid filename (CWE-73) and potential resource leak (CWE-775)",
+                "Issue2": "[12, 13] - Incorrect file handling, potentially overwriting existing files or creating files with unexpected names. (CWE-377 and CWE-73)"
+            },
+            "Improvement": {
+                "Fix1": "Use a valid and appropriate filename.  Avoid hardcoding filenames if possible, and ensure user-provided filenames are sanitized if applicable.  Also, check for NULL immediately after each fopen call.",
+                "Fix2": "Instead of \"w+\" consider using a more restrictive mode like \"r\" if the intention is to just read from the file, or \"a\" to append. If writing is needed and the intention isn't to overwrite, handle existing files gracefully or use unique temporary file names to avoid unintended overwrites or data loss. Error handling can be further improved by checking errno or using perror."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n#include <errno.h>\n#include <string.h>\n\nvoid ppoeidn()\n{\n    FILE * data;\n    data = NULL;\n    const char * filename = \"my_data_file.txt\";\n\n    data = fopen(filename, \"a\");\n    if (data == NULL)\n    {\n        fprintf(stderr, \"Error opening file: %s\\n\", strerror(errno));\n        return; \n    }\n\n    /* ... perform file operations ... */\n\n    if (fclose(data) != 0) {\n        fprintf(stderr, \"Error closing file: %s\\n\", strerror(errno));\n    }\n}\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-590"
+            ],
+            "filename": "000106136_1.txt",
+            "type": "FN",
+            "cwe": "CWE-590",
+            "actual_cwes": [
+                "CWE-590"
+            ],
+            "predicted_cwes": [
+                "CWE-416",
+                "CWE-762"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    char * data;\n    data = NULL; \n    {\n        char * dataBuffer = (char *)ALLOCA(100*sizeof(char));\n        memset(dataBuffer, 'A', 100-1); \n        dataBuffer[100-1] = '\\0'; \n        data = dataBuffer;\n    }\n    printLine(data);\n    delete [] data;\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a memory management vulnerability due to a mismatch between memory allocation using ALLOCA (which allocates on the stack) and deallocation using `delete[]` (which is meant for heap-allocated memory). This can lead to a crash or undefined behavior.",
+            "Vulnerabilities Found": {
+                "Issue1": "[line 22, 24] - Mismatched memory allocation and deallocation (CWE-762), leading to potential heap corruption (CWE-122) and a crash (CWE-672)."
+            },
+            "Improvement": {
+                "Fix1": "Since `ALLOCA` allocates on the stack, no manual deallocation is necessary. Remove the `delete[] data;` line. Stack memory is automatically reclaimed when the function returns."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n#include <wchar.h>\n\nnamespace var1\n{\n\n\n\nvoid ppoeidn()\n{\n    char * data;\n    data = NULL; \n    {\n        char * dataBuffer = (char *)ALLOCA(100*sizeof(char));\n        memset(dataBuffer, 'A', 100-1); \n        dataBuffer[100-1] = '\\0'; \n        data = dataBuffer;\n    }\n    printLine(data);\n}\n\n} \n\n\n\nusing namespace var1; \n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ],
+            "filename": "000082266_1.txt",
+            "type": "TP",
+            "cwe": "CWE-190",
+            "actual_cwes": [
+                "CWE-190"
+            ],
+            "predicted_cwes": [
+                "CWE-190"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    char data;\n    data = ' ';\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        data = CHAR_MAX;\n    }\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        {\n            char result = data + 1;\n            printHexCharLine(result);\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code contains an integer overflow vulnerability.  The variable `data` is assigned the maximum value for a char, and then 1 is added to it.  This results in overflow, leading to undefined behavior and potential security risks.",
+            "Vulnerabilities Found": {
+                "Integer Overflow": "[19, 21] - Integer overflow vulnerability due to adding 1 to CHAR_MAX. (CWE-190)"
+            },
+            "Improvement": {
+                "Fix1": "Check for potential overflow before performing the addition.  If `data` is CHAR_MAX, handle the case appropriately (e.g., set `result` to CHAR_MIN, return an error, or saturate the result).  Alternatively, use a larger data type for `data` and `result` to avoid the overflow altogether if the broader logic allows it."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n\nvoid ppoeidn()\n{\n    char data;\n    data = ' ';\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        data = CHAR_MAX;\n    }\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        {\n            char result;\n            if (data == CHAR_MAX) {\n                result = CHAR_MIN; // Wrap around or handle the overflow appropriately.\n            } else {\n                result = data + 1;\n            }\n            printHexCharLine(result);\n        }\n    }\n}\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ],
+            "filename": "000082110_1.txt",
+            "type": "FN",
+            "cwe": "CWE-190",
+            "actual_cwes": [
+                "CWE-190"
+            ],
+            "predicted_cwes": [
+                "CWE-676",
+                "CWE-787"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n\n\nvoid ppoeidn()\n{\n    char data;\n    data = ' ';\n    fscanf (stdin, \"%c\", &data);\n    {\n        char result = data + 1;\n        printHexCharLine(result);\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code is vulnerable to integer overflow due to the unchecked addition operation on the character 'data'.  If the input character is close to the maximum value for a signed char, the addition could result in an overflow, leading to unexpected behavior or a potential crash.",
+            "Vulnerabilities Found": {
+                "Integer Overflow": "[14] - The addition of 'data + 1' can cause an integer overflow if 'data' has a value close to the maximum for a signed char. (CWE-190)"
+            },
+            "Improvement": {
+                "Fix1": "Check for potential overflow before performing the addition. For example:\nc++\n#include <limits>\n...\nchar result = data;\n if (data < std::numeric_limits<char>::max()) {\n        result++;\n    }\n    else{\n        //handle overflow. In this test case, print an error message and exit is adequate\n        printLine(\"Overflow in calculation\");\n        exit(1);\n    }\nprintHexCharLine(result);\n"
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n#include <limits>\n\n\n\nvoid ppoeidn()\n{\n    char data;\n    data = ' ';\n    fscanf(stdin, \"%c\", &data);\n    {\n        char result = data;\n        if (data < std::numeric_limits<char>::max()) {\n            result++;\n        }\n        else {\n            printLine(\"Overflow in calculation\");\n            exit(1);\n        }\n        printHexCharLine(result);\n    }\n}\n\n\n\nint main(int argc, char* argv[])\n{\n    srand((unsigned)time(NULL));\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-401"
+            ],
+            "filename": "000239723_1.txt",
+            "type": "FP",
+            "cwe": "CWE-190",
+            "actual_cwes": [
+                "CWE-401"
+            ],
+            "predicted_cwes": [
+                "CWE-787",
+                "CWE-190"
+            ]
+        },
+        "language": "lang-cpp",
+        "code": "#include \"std_testcase.h\"\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n\n\nvoid ppoeidn()\n{\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        {\n            int * data = (int *)malloc(100*sizeof(int));\n            if (data == NULL) {exit(-1);}\n            data[0] = 5;\n            printIntLine(data[0]);\n            data = (int *)realloc(data, (130000)*sizeof(int));\n            if (data != NULL)\n            {\n                data[0] = 10;\n                printIntLine(data[0]);\n                free(data);\n            }\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}\n\n",
+        "result": {
+            "Secure": false,
+            "Explanation": "The code has a potential integer overflow vulnerability in the `realloc` call.  Multiplying `130000` by `sizeof(int)` could lead to an integer overflow if `sizeof(int)` is large (e.g., 8 bytes on 64-bit systems) and the result exceeds the maximum value for the `size_t` type used by `realloc`.  This could result in `realloc` being called with a smaller size than intended, leading to a heap overflow when later code accesses the array using the original size.",
+            "Vulnerabilities Found": {
+                "Integer Overflow": "[18] - Integer overflow in realloc (CWE-190)"
+            },
+            "Improvement": {
+                "Check for Overflow": "Check for potential integer overflow before calling `realloc`.  Calculate the required size using a larger integer type and validate the result before casting to `size_t`."
+            },
+            "FinalCode": "#include \"std_testcase.h\"\n\n#ifndef _WIN32\n#include <wchar.h>\n#endif\n\n#include <limits>\n\nvoid ppoeidn()\n{\n    if(GLOBAL_CONST_FIVE==5)\n    {\n        {\n            int * data = (int *)malloc(100*sizeof(int));\n            if (data == NULL) {exit(-1);}\n            data[0] = 5;\n            printIntLine(data[0]);\n\n            long long newSize = 130000LL * sizeof(int);\n            if (newSize > std::numeric_limits<size_t>::max()) {\n                // Handle error - overflow detected\n                fprintf(stderr, \"Integer overflow detected in realloc\\n\");\n                free(data);\n                exit(-1);\n            }\n\n            data = (int *)realloc(data, static_cast<size_t>(newSize));\n\n            if (data != NULL)\n            {\n                data[0] = 10;\n                printIntLine(data[0]);\n                free(data);\n            } else {\n                // Handle realloc failure if necessary\n            }\n        }\n    }\n}\n\n\n\nint main(int argc, char * argv[])\n{\n    srand( (unsigned)time(NULL) );\n\n    printLine(\"Calling ...\");\n    ppoeidn();\n    printLine(\"Finished\");\n    return 0;\n}"
+        }
+    }
+]
