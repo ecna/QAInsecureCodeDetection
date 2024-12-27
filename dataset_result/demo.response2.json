@@ -1,0 +1,55 @@
+[
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ]
+        },
+        "result": {
+            "isCodeSecure": false,
+            "CWEs": [
+                190
+            ]
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ]
+        },
+        "result": {
+            "isCodeSecure": false,
+            "CWEs": [
+                190
+            ]
+        }
+    },
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ]
+        },
+        "result": {
+            "isCodeSecure": false,
+            "CWEs": [
+                687
+            ]
+        }
+    }
+    ,
+    {
+        "data": {
+            "cwe_ids": [
+                "CWE-190"
+            ]
+        },
+        "result": {
+            "isCodeSecure": false,
+            "CWEs": [
+                444
+            ]
+        }
+    }
+]

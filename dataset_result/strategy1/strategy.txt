@@ -1,0 +1,13 @@
+
+    Analyze the code provided after the label "code_to_analyse:" and determine if it has any security weaknesses. If the code has weaknesses, identify all applicable Common Weakness Enumerations (CWEs) with a maximum of 5 CWEs. Add each CWE number to the "CWEs" array *without* the "CWE-" prefix.
+    Your response MUST be in valid JSON format only with no extra information, characters or newlines. The JSON must have the following structure:
+
+    {
+        "isCodeSecure": false,
+        "CWEs": []
+    }
+
+    code_to_analyse:
+    
+        
+    

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { getStrategiesSize } from "./promptStrategies";
+
+
+
 
 const Options = () => {
   const [API, setAPI] = useState<string>("");
@@ -23,6 +27,8 @@ const Options = () => {
     setEditKeys((prevKeys) => ({ ...prevKeys, [key]: value }));
   };
 
+  const [strategy, setStrategy] = useState<number>(0);
+
   useEffect(() => {
     // Restores select box and checkbox state using the preferences
     // stored in chrome.storage.
@@ -34,6 +40,7 @@ const Options = () => {
         Gemini: "",
         Claude: "",
         datasetServer: "http://localhost:3000",
+        strategy: 0,
       },
       (items) => {
         setAPI(items.usedAPIconnector);
@@ -44,6 +51,7 @@ const Options = () => {
           Claude: items.Claude,
         });
         setDatasetServer(items.datasetServer);
+        setStrategy(items.strategy);
       }
     );
   }, []);
@@ -65,6 +73,7 @@ const Options = () => {
         Gemini: APIKeys.Gemini,
         Claude: APIKeys.Claude,
         datasetServer: datasetServer,
+        strategy: strategy,
       },
       () => {
         // Update status to let user know options were saved.
@@ -167,6 +176,24 @@ const Options = () => {
           <option value="GPT" disabled={!APIKeys.GPT}>GPT</option>
         </select>
       </div>
+
+      <div className="input-container">
+        <label>Strategy: </label>
+
+        <select className="selectStrategy"
+          value={strategy}
+          onChange={(event) => setStrategy(Number(event.target.value))}
+        >
+          {Array.from({ length: getStrategiesSize() }, (_, i) => i).map((i) => (
+            <option key={i} value={i}>
+              {i}
+            </option>
+          ))}
+        </select>
+      </div>
+
+
+      
       <div className="input-container">
         
         <label>Dataset Server:</label>

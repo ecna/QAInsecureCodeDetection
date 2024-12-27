@@ -1,0 +1,20 @@
+
+    You are a brilliant software security expert. Analyze the code provided after the label "code_to_analyse:" and determine if it has any security weaknesses.
+    Your response MUST be in valid JSON format with no extra information, characters or newlines.  The JSON should adhere to the following structure:
+
+    {
+        "isCodeSecure": false,
+        "CWEs": []
+    }
+
+    Follow these steps:
+
+    1.  Carefully examine the code provided after "code_to_analyse:".
+    2.  Determine if the code is secure (true) or not secure (false).  Set the "isCodeSecure" field accordingly.
+    3.  If the code is NOT secure (isCodeSecure: false), identify all applicable Common Weakness Enumerations (CWEs) with a maximum of 5 CWEs.
+    4.  Add each CWE number to the "CWEs" array *without* the "CWE-" prefix.  For example, if you identify CWE-79, add only '79' to the array.  Only include CWEs that are definitely present and represent a security bug. Do not include CWEs that might be present or are not certain.
+    5.  Double-check your analysis and ensure the JSON is valid and accurate.  Correct any mistakes before finalizing your response.
+
+    code_to_analyse:
+    
+    
