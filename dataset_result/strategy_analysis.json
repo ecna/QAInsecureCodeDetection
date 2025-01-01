@@ -1,0 +1,514 @@
+{
+  "strategies": [
+    {
+      "strategy_name": "strategy1",
+      "models": [
+        {
+          "model_name": "GPT",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 99
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 89
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 98
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 92
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 81
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 3
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 30
+            }
+          ]
+        },
+        {
+          "model_name": "Gemini",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 50
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 77
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 11
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 95
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 97
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 54
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 13
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 47
+            }
+          ]
+        },
+        {
+          "model_name": "Claude",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 68
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 99
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 98
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 105
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 15
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 68
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 38
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 30
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "strategy_name": "strategy2",
+      "models": [
+        {
+          "model_name": "GPT",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 12
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 10
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 10
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 11
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 22
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 19
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 11
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 5
+            }
+          ]
+        },
+        {
+          "model_name": "Gemini",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 48
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 84
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 9
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 89
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 98
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 41
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 18
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 23
+            }
+          ]
+        },
+        {
+          "model_name": "Claude",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 71
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 104
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 11
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 82
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 30
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 29
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "strategy_name": "strategy 3",
+      "models": [
+        {
+          "model_name": "GPT",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 5
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 1
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 7
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 12
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 8
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 3
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 2
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 9
+            }
+          ]
+        },
+        {
+          "model_name": "Gemini",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 43
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 82
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 5
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 86
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 99
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 31
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 0
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 8
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 19
+            }
+          ]
+        },
+        {
+          "model_name": "Claude",
+          "cwe_stats": [
+            {
+              "cwe": "CWE-190",
+              "present": 100,
+              "detected": 66
+            },
+            {
+              "cwe": "CWE-401",
+              "present": 100,
+              "detected": 99
+            },
+            {
+              "cwe": "CWE-415",
+              "present": 100,
+              "detected": 89
+            },
+            {
+              "cwe": "CWE-416",
+              "present": 100,
+              "detected": 100
+            },
+            {
+              "cwe": "CWE-476",
+              "present": 100,
+              "detected": 101
+            },
+            {
+              "cwe": "CWE-590",
+              "present": 100,
+              "detected": 13
+            },
+            {
+              "cwe": "CWE-762",
+              "present": 100,
+              "detected": 45
+            },
+            {
+              "cwe": "CWE-773",
+              "present": 100,
+              "detected": 33
+            },
+            {
+              "cwe": "CWE-775",
+              "present": 100,
+              "detected": 17
+            },
+            {
+              "cwe": "CWE-789",
+              "present": 100,
+              "detected": 102
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

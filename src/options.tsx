@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { getStrategiesSize } from "./promptStrategies";
+import { getStrategiesSize } from "./strategyProvider";
 
 
 

@@ -5,7 +5,7 @@ var serverAddress = "";
 
 
 // This function collects code snippets from the current page.
-export function getCodeSnippets() {
+export function webToCode() {
 
   const codeSnippets: { code: string; language: string; }[] = [];
   const preElements = document.querySelectorAll('pre');
@@ -27,8 +27,8 @@ export function getCodeSnippets() {
   return codeSnippets;
 }
 
-// This function collects code snippets from a dataset.
-export async function getCodeFromDataset() {
+// This function collect 1 code snippet from MegaVul dataset for test perposes.
+export async function datasetToCode() {
 
   let codeSnippets: { data: JSON; code: string; language: string; result: JSON }[] = [];
 
@@ -54,30 +54,7 @@ export async function getCodeFromDataset() {
   return codeSnippets;
 }
 
-// This function collects code snippets from a SARD dataset.
-export async function getCodeFromSARDDataset() {
-
-  let codeSnippets: { data: JSON; code: string; language: string; result: JSON }[] = [];
-
-  if (serverAddress === "") {
-    const APItoUse = await chrome.storage.sync.get(['datasetServer']);
-    serverAddress = APItoUse['datasetServer'];
-}
-
-  try {
-    // Fetch the data from the API. Which CWE's and how many must be placed in a config file
-    const response = await fetch(serverAddress + '/sard_1000');
-    const resJson = await response.json();
-    codeSnippets = resJson;
-
-  } catch (error) {
-    console.warn('getData error', error);
-  }
-
-  return codeSnippets;
-}
-
-export async function getListFromDataset(cweList : JSON){
+export async function mvdatasetToCode(cweList : JSON){
   let codeSnippets: { data: JSON; code: string; language: string; result: JSON }[] = [];
 
   if (serverAddress === "") {
@@ -104,6 +81,29 @@ export async function getListFromDataset(cweList : JSON){
       codeSnippets.push({data: item, language: lang, code: code,  result: JSON.parse(JSON.stringify({})) });
       count++;
     });
+
+  } catch (error) {
+    console.warn('getData error', error);
+  }
+
+  return codeSnippets;
+}
+
+// This function collects code snippets from a SARD dataset.
+export async function sardDatasetToCode() {
+
+  let codeSnippets: { data: JSON; code: string; language: string; result: JSON }[] = [];
+
+  if (serverAddress === "") {
+    const APItoUse = await chrome.storage.sync.get(['datasetServer']);
+    serverAddress = APItoUse['datasetServer'];
+}
+
+  try {
+    // Fetch the data from the API. Which CWE's and how many must be placed in a config file
+    const response = await fetch(serverAddress + '/sard_1000');
+    const resJson = await response.json();
+    codeSnippets = resJson;
 
   } catch (error) {
     console.warn('getData error', error);

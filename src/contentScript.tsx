@@ -1,8 +1,8 @@
-import { getCodeSnippets } from "./codeCollectors";
-import { getCodeFromDataset } from "./codeCollectors";
-import { getListFromDataset } from "./codeCollectors";
-import { getCodeFromSARDDataset } from "./codeCollectors";
-import { getStrategy } from "./promptStrategies";
+import { webToCode } from "./codeCollectors";
+import { datasetToCode } from "./codeCollectors";
+import { mvdatasetToCode } from "./codeCollectors";
+import { sardDatasetToCode } from "./codeCollectors";
+import { getStrategy } from "./strategyProvider";
 
 
 start();
@@ -68,7 +68,7 @@ async function datasetMain() {
 
 
 async function codeSnippetRun() {
-  var codeFromDataset = await getCodeFromDataset();
+  var codeFromDataset = await datasetToCode();
 
   printResultInHTML('Code to Analyse', codeFromDataset[0].code, document.body);
 
@@ -104,7 +104,7 @@ async function codeSnippetRun() {
 
 function webPageMain() {
 
-  var codeSnippert = getCodeSnippets();
+  var codeSnippert = webToCode();
 
   chrome.runtime.sendMessage({ action: "checkCodeCPP", code: codeSnippert }, (response) => {
     // Got an asynchronous response with the data from the background script
@@ -263,7 +263,7 @@ function checkJSONfile(jsonData: { [x: string]: any; }, text: string) {
 
 async function collectCode(jsonData: JSON) {
 
-  var codeFromDataset = await getListFromDataset(jsonData);
+  var codeFromDataset = await mvdatasetToCode(jsonData);
 
   const blob = new Blob([JSON.stringify(codeFromDataset)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -346,7 +346,7 @@ async function analyseCodesnippetsWithAPI(codeFromDataset: { data: JSON; code: s
 
 async function datasetRun() {
 
-  var codeFromDataset = await getCodeFromSARDDataset();
+  var codeFromDataset = await sardDatasetToCode();
 
   const blob = new Blob([JSON.stringify(codeFromDataset)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);

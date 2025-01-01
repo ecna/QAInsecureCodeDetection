@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 # Load the JSON data
-with open('./responseClaude.json') as f:
+with open('./strategy2/responseGPT.json') as f:
     data = json.load(f)
 
 foundCWE = 0

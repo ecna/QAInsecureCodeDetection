@@ -4,7 +4,7 @@ import chatGPTPrompt from "./apiConnectorGPT";
 import { ensureAPIConnectorIsSet } from "./checkDefaultSettings";
 import { ensureDatasetModeIsSet } from "./checkDefaultSettings";
 import { ensureDatasetServerIsSet } from "./checkDefaultSettings";
-import { getStrategy } from "./promptStrategies";
+import { getStrategy } from "./strategyProvider";
 
 ensureAPIConnectorIsSet();
 ensureDatasetModeIsSet();
