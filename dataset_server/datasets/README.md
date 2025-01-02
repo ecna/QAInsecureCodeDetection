@@ -9,14 +9,10 @@ This directory contains various datasets used for QA Insecure Code Detection.:
     - Location: `https://github.com/Icyrockton/MegaVul`
     - info: -.
 
-2. **Dataset 2**
-    - Description: Brief description of Dataset 2.
-    - Location: `-`
+2. **SARD dataset**
+    - Description: A collection of C and C++ test cases updated from Juliet C/C++ 1.3.
+    - Location: `https://samate.nist.gov/SARD/test-suites/116`
     - info: -.
-
-## Usage
-
-To use a dataset, navigate to its location and follow the instructions provided in the `README.md` file located within that repository and place it in the local dataset folder
 
 ## License
 
