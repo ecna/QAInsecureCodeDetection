@@ -1,0 +1,4 @@
+Type;TP;FN;FP
+actual_cwes;['CWE-415'];['CWE-415'];['CWE-401']
+predicted_cwes;['CWE-415', 'CWE-416'];['CWE-416'];[CWE-415]
+Vulnerabilities Found;['[lines 10-12, 28-30] - Double Free Vulnerability (CWE-415)'];"[""[line 38] - Double Free: The pointer 'data' is freed twice, once in 'ppoeidn3' and again in 'ppoeidn0'. (CWE-415)""]";[]

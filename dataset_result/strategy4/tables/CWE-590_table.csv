@@ -1,0 +1,4 @@
+Type;TP;FN;FP
+actual_cwes;['CWE-590'];['CWE-590'];['CWE-401']
+predicted_cwes;['CWE-590'];['CWE-416'];[CWE-590]
+Vulnerabilities Found;[];[];[]

@@ -1,0 +1,4 @@
+Type;TP;FN;FP
+actual_cwes;['CWE-190'];['CWE-190'];['CWE-789']
+predicted_cwes;['CWE-190'];['CWE-20', 'CWE-120', 'CWE-676'];[CWE-190]
+Vulnerabilities Found;['[line 10] - Potential integer overflow when incrementing a char variable (CWE-190)'];['[line 66] - Potential integer overflow when incrementing data (CWE-190)'];['[line 54] - Potential integer overflow when calculating memory allocation size (CWE-190)']

@@ -1,0 +1,4 @@
+Type;TP;FN;FP
+actual_cwes;['CWE-401'];['CWE-401'];['CWE-476']
+predicted_cwes;['CWE-401', 'CWE-120'];['CWE-252', 'CWE-476', 'CWE-758'];[CWE-401]
+Vulnerabilities Found;['[line 20] - Memory leak due to overwriting the pointer without freeing the previously allocated memory (CWE-401)'];[];['[line 12-21] - Memory leak due to not freeing allocated memory (CWE-401)']

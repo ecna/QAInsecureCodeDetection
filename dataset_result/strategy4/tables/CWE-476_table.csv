@@ -1,0 +1,4 @@
+Type;TP;FN;FP
+actual_cwes;['CWE-476'];['CWE-476'];['CWE-190']
+predicted_cwes;['CWE-476'];['CWE-457'];[CWE-476]
+Vulnerabilities Found;['[line 7] - Null pointer dereference (CWE-476)'];['[line 19] - Null pointer dereference when accessing data[0] (CWE-476)'];[]

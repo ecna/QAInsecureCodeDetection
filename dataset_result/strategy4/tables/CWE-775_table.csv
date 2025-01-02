@@ -1,0 +1,4 @@
+Type;TP;FN;FP
+actual_cwes;['CWE-775'];['CWE-775'];['CWE-773']
+predicted_cwes;['CWE-404', 'CWE-775', 'CWE-20'];['CWE-676', 'CWE-404'];[CWE-775]
+Vulnerabilities Found;['[line 27] - Potential resource leak due to not closing the file descriptor (CWE-775)'];[];['[Line 29, 36] - Potential resource leak due to improper file handling (CWE-775)']
