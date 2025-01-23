@@ -74,13 +74,17 @@ When started, 'context_page_minimal.html' opens in Chrome (Chrome must be instal
 
 If the extension is in 'dataset mode', the HTML page is cleared, and dataset information is injected into the page.
 
-LLM API keys can be added through the extension menu (right-click the extension icon and select "Options"). See image:
+LLM API keys can be added through the extension menu (right-click the extension icon and select "Options"). 
+
+Menu dialog:
 
 ![Extension Menu](screenshots/Screenshot_menu.png)
 
 In this menu, you can also activate 'dataset mode' and switch between LLMs and strategies.
 
 Switching to another LLM and activating 'dataset mode' can also be done through the popup dialog (click the extension icon).
+
+Popup dialog:
 
 ![Extension Menu](screenshots/Screenshot_popup.png).
 
