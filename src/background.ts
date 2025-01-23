@@ -49,7 +49,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         
         var result = await checkCodeIsSecure(codeSnippets[i].code);
 
-        const resultJSON = JSON.parse(result.replace(/\\/g, '').replace(/\n/g, ''));
+        const resultJSON = JSON.parse(result);
+        // const resultJSON = JSON.parse(result.replace(/\\/g, '').replace(/\n/g, ''));
 
         codeSnippetsResult.push({data: codeSnippets[i].data, language: codeSnippets[i].language, code: codeSnippets[i].code, result: resultJSON });
 

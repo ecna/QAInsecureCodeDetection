@@ -93,7 +93,7 @@ const strategies: string[] = [
     {
   "Secure": false,
   "Explanation": "",
-  "Vulnerabilities Found": {
+  "Vulnerabilities": {
     "Issue1": "[line number(s)] - Description (CWE-ID)",
     "Issue2": "[line number(s)] - Description (CWE-ID)"
   },

@@ -19,9 +19,9 @@ async function chatClaudePrompt(prompt: string): Promise<string> {
     try {
         const result = await anthropic.messages.create({
             model: "claude-3-5-sonnet-20241022",
-            max_tokens: 50,
+            max_tokens: 1500,
             temperature: 0,
-            system: "Don't give an explanation and only answer with JSON object and without new line characters (\n). So no extra prefixes or suffixes to the JSON data (RAW JSON data only!).",
+            // system: "Don't give an explanation and only answer with JSON object and without new line characters (\n). So no extra prefixes or suffixes to the JSON data (RAW JSON data only!).",
             messages: [{ role: "user", content: prompt },
             ],
         },
@@ -48,7 +48,7 @@ async function chatClaudePrompt(prompt: string): Promise<string> {
         try {
             const retryResult = await anthropic.messages.create({
                 model: "claude-3-5-sonnet-20241022",
-                max_tokens: 50,
+                max_tokens: 1500,
                 temperature: 0,
                 messages: [
                     { role: "user", content: prompt }

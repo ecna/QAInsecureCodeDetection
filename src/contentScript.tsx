@@ -3,7 +3,7 @@ import { datasetToCode } from "./codeCollectors";
 import { mvdatasetToCode } from "./codeCollectors";
 import { sardDatasetToCode } from "./codeCollectors";
 import { getStrategy } from "./strategyProvider";
-
+import { dialog } from "./contentDialog";
 
 start();
 
@@ -36,21 +36,21 @@ async function datasetMain() {
     }
   });
 
-  const strategy  = await chrome.storage.sync.get(['strategy']);
-    var promptStrategy = getStrategy(strategy['strategy']);
+  const strategy = await chrome.storage.sync.get(['strategy']);
+  var promptStrategy = getStrategy(strategy['strategy']);
 
-    const blob = new Blob([promptStrategy], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    var datasetSubset = document.createElement('div');
-  
-    const a = document.createElement('a');
-  
-    a.textContent = 'Download Strategy';
-    a.href = url;
-    a.download = 'strategy.txt';
-  
-    datasetSubset.appendChild(a);
-    document.body.appendChild(datasetSubset);
+  const blob = new Blob([promptStrategy], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  var datasetSubset = document.createElement('div');
+
+  const a = document.createElement('a');
+
+  a.textContent = 'Download Strategy';
+  a.href = url;
+  a.download = 'strategy.txt';
+
+  datasetSubset.appendChild(a);
+  document.body.appendChild(datasetSubset);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // test with only one code snippet
@@ -148,6 +148,7 @@ function webPageMain() {
     checkMark.style.float = "right";
     checkMark.style.color = isCpp ? 'green' : 'red';
     checkMark.textContent = isCpp ? '✓' : '✗';
+    checkMark.id = 'detectionInfo';
     if (codeElement.parentNode) codeElement.parentNode.insertBefore(checkMark, codeElement);
   }
 
@@ -155,14 +156,86 @@ function webPageMain() {
 
 function printResultInHTML(title: string, result: any, codeElement: HTMLElement) {
   const div = document.createElement('div');
-  const heading = document.createElement('h1');
-  heading.textContent = title;
-  const paragraph = document.createElement('pre');
-  paragraph.textContent = result;
+  div.innerHTML = dialog;
 
-  div.appendChild(heading);
-  div.appendChild(paragraph);
-  codeElement.appendChild(div);
+  const popupDialog = div.querySelector('#popup-dialog') as HTMLDialogElement;
+  const openButton = div.querySelector('#open-dialog');
+  const closeButton = div.querySelector('#close-dialog');
+  const copyButton = div.querySelector('#copy-dialog');
+  var contentExplanation = div.querySelector('#contentExplanation');
+
+  if (contentExplanation) {
+    const explanation = result.result.Explanation;
+    contentExplanation.textContent = explanation;
+  }
+
+  var contentVul = div.querySelector('#contentVul');
+
+  if (contentVul) {
+    var vul = result.result.Vulnerabilities;
+    var improve = result.result.Improvement;
+
+    if (typeof vul === 'object' && vul !== null) {
+      vul = Object.entries(vul).map(([key, value]) => ({ key, value }));
+    }
+
+    if (typeof improve === 'object' && improve !== null) {
+      improve = Object.entries(improve).map(([key, value]) => ({ key, value }));
+    }
+
+    if (Array.isArray(vul)) {
+      vul.forEach((item, index) => {
+        var h3 = document.createElement('h3');
+        h3.textContent = `${item.key}: ${item.value}`;
+        if (contentVul) contentVul.appendChild(h3);
+
+        if (Array.isArray(improve) && improve[index]) {
+          var improveP = document.createElement('p');
+          improveP.textContent = `${improve[index].value}`;
+          if (contentVul) contentVul.appendChild(improveP);
+        }
+      });
+    } else {
+      const p = document.createElement('p');
+      p.textContent = vul;
+      contentVul.appendChild(p);
+    }
+
+  }
+
+  var contentCode = div.querySelector('#contentCode');
+
+  if (contentCode) {
+    const code = result.result.FinalCode;
+    const pre = document.createElement('pre');
+    pre.textContent = code;
+    contentCode.appendChild(pre);
+  }
+
+  if (openButton) {
+    openButton.addEventListener("click", () => {
+      popupDialog.showModal();
+    });
+  }
+
+  if (closeButton) {
+    closeButton.addEventListener("click", () => {
+      popupDialog.close();
+    });
+  }
+
+  if (copyButton) {
+    copyButton.addEventListener("click", () => {
+      var copyText = document.getElementById("contentCode")?.textContent;
+      if (copyText) {
+        navigator.clipboard.writeText(copyText);
+      } else {
+        console.error('No text to copy.');
+      }
+    });
+  }
+
+  if (codeElement.parentNode) codeElement.parentNode.insertBefore(div, codeElement);
 }
 
 function datasetRunScript() {
@@ -281,7 +354,7 @@ async function collectCode(jsonData: JSON) {
   await analyseCodesnippetsWithAPI(codeFromDataset, "Gemini");
   await analyseCodesnippetsWithAPI(codeFromDataset, "GPT");
   await analyseCodesnippetsWithAPI(codeFromDataset, "Claude");
-  
+
 }
 
 const waitUntil = (condition: () => any, checkInterval = 100) => {
@@ -361,10 +434,10 @@ async function datasetRun() {
   datasetSubset.appendChild(a);
   document.body.appendChild(datasetSubset);
 
-  
+
   await analyseCodesnippetsWithAPI(codeFromDataset, "Gemini");
   await analyseCodesnippetsWithAPI(codeFromDataset, "GPT");
   await analyseCodesnippetsWithAPI(codeFromDataset, "Claude");
-    
+
 }
 

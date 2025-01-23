@@ -18,7 +18,7 @@ async function chatGPTPrompt(prompt: string): Promise<string> {
         const response = await openai.chat.completions.create({
             model: "gpt-4o", 
             messages: [{ role: "user", content: prompt }],
-            max_tokens: 50,
+            max_tokens: 1500,
             temperature: 0, // Ensures deterministic and precise responses
         });
 
@@ -34,7 +34,7 @@ async function chatGPTPrompt(prompt: string): Promise<string> {
             const retryResponse = await openai.chat.completions.create({
                 model: "gpt-4o", 
                 messages: [{ role: "user", content: prompt }],
-                max_tokens: 50,
+                max_tokens: 1500,
                 temperature: 0,
             });
 
