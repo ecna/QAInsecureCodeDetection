@@ -70,3 +70,17 @@ or
 
 vsCode menu => Run => 'Start Debugging' (<kbd>F5</kbd>)
 
+When started, 'context_page_minimal.html' opens in Chrome (Chrome must be installed). To open 'context_page.html', change the 'file' parameter in 'launch.json'.
+
+If the extension is in 'dataset mode', the HTML page is cleared, and dataset information is injected into the page.
+
+LLM API keys can be added through the extension menu (right-click the extension icon and select "Options"). See image:
+
+![Extension Menu](screenshots/Screenshot_menu.png)
+
+In this menu, you can also activate 'dataset mode' and switch between LLMs and strategies.
+
+Switching to another LLM and activating 'dataset mode' can also be done through the popup dialog (click the extension icon).
+
+![Extension Menu](screenshots/Screenshot_popup.png).
+
