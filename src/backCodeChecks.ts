@@ -1,6 +1,6 @@
-import chatClaudePrompt from "./apiConnectorClaude";
-import chatGeminiPrompt from "./apiConnectorGemini";
-import chatGPTPrompt from "./apiConnectorGPT";
+import chatClaudePrompt from "./APIconnectorClaude";
+import chatGeminiPrompt from "./APIconnectorGemini";
+import chatGPTPrompt from "./APIconnectorGPT";
 import { ensureAPIConnectorIsSet } from "./checkDefaultSettings";
 import { ensureDatasetModeIsSet } from "./checkDefaultSettings";
 import { ensureDatasetServerIsSet } from "./checkDefaultSettings";
