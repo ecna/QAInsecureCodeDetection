@@ -88,3 +88,7 @@ Popup dialog:
 
 ![Extension Menu](screenshots/Screenshot_popup.png).
 
+
+### Master Thesis
+
+This repository is the technical result of the master thesis: "Insecure code detection with LLMs", which can be downloaded [here](thesis/InsecureCodeDetection_v2.0.pdf).
